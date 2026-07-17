@@ -262,6 +262,7 @@
       <nav class="flex items-center gap-1" aria-label="Primary navigation">
         <button class="staff-tab-btn app-nav-btn active px-3 py-2 rounded-lg text-sm" data-tab="home">Home</button>
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="poster">Poster view</button>
+        <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="forms">Lottery forms</button>
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="history">Past lotteries</button>
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="wiki">Wiki &amp; tutorial</button>
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="config">Master settings</button>
@@ -286,6 +287,7 @@
         <div id="tab-entry" class="tab-panel hidden"></div>
         <div id="tab-results" class="tab-panel hidden"></div>
         <div id="tab-poster" class="tab-panel hidden"></div>
+        <div id="tab-forms" class="tab-panel hidden"></div>
         <div id="tab-wiki" class="tab-panel hidden"></div>
       </section>
     </div>
@@ -373,7 +375,7 @@
        Uses a single delegated listener instead of N individual ones.
     ──────────────────────────────────────────────────────────────────────── */
     (function () {
-      var TAB_NAMES = ["home", "history", "config", "entry", "results", "poster", "wiki"];
+      var TAB_NAMES = ["home", "history", "config", "entry", "results", "poster", "forms", "wiki"];
       var TAB_LABELS = {
         home: "Home",
         history: "Past lotteries",
@@ -381,12 +383,13 @@
         entry: "Lottery workspace",
         results: "Lottery review",
         poster: "Poster view",
+        forms: "Lottery forms",
         wiki: "Wiki & tutorial"
       };
 
       function switchToTab(tabName) {
         if (!TAB_NAMES.includes(tabName)) return;
-        var rendererName = { poster: "renderPosterTab", wiki: "renderWikiTab", history: "renderHistoryTab" }[tabName];
+        var rendererName = { poster: "renderPosterTab", forms: "renderFormsTab", wiki: "renderWikiTab", history: "renderHistoryTab" }[tabName];
         if (rendererName && typeof window[rendererName] === "function") {
           try {
             window[rendererName]();
@@ -1024,6 +1027,7 @@
       tabEntry: document.getElementById("tab-entry"),
       tabResults: document.getElementById("tab-results"),
       tabPoster: document.getElementById("tab-poster"),
+      tabForms: document.getElementById("tab-forms"),
       tabWiki: document.getElementById("tab-wiki"),
       entryModal: document.getElementById("entryModal"),
       modalTitle: document.getElementById("modalTitle"),
@@ -3535,6 +3539,65 @@
       });
     }
 
+    const LOTTERY_FORMS = [
+      { id: "waterskiing", name: "Waterskiing", description: "Bruins+ · skiing, kneeboarding, and wakeboarding preferences", file: "BW_WATERSKIING_LOTTERY_2026.pdf" },
+      { id: "kayaking", name: "Kayaking", description: "Ages 13+ · kayak tour preferences and participant count", file: "BW_KAYAKIING_LOTTERY_2026.pdf" },
+      { id: "fishing", name: "Fishing", description: "Cubs+ · fishing-trip preferences and participant count", file: "BW_FISHING_LOTTERY_2026.pdf" },
+      { id: "pontoon", name: "Pontoon Cruise", description: "Pontoon-cruise preferences and participant count", file: "BW_PONTOON_CRUISE_LOTTERY_2026.pdf" }
+    ];
+
+    function renderFormsTabImpl() {
+      const selected = LOTTERY_FORMS[0];
+      const formPath = form => `forms/${form.file}`;
+      const cards = LOTTERY_FORMS.map((form, index) => `
+        <article class="rounded-xl border border-[#d9e2ec] bg-white p-4">
+          <p class="text-xs font-black uppercase tracking-[.14em] text-[#2774ae]">${escapeHtml(form.name)}</p>
+          <p class="mt-2 min-h-10 text-sm leading-relaxed text-[#486581]">${escapeHtml(form.description)}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button class="form-view-btn rounded-lg ${index === 0 ? "bg-[#003b5c] text-white" : "border border-[#9fb3c8] bg-white text-[#245a78]"} px-3 py-2 text-sm font-bold hover:bg-[#edf7fc]" data-form-id="${form.id}" data-form-path="${formPath(form)}" data-form-name="${escapeHtml(form.name)}" aria-pressed="${index === 0 ? "true" : "false"}">View form</button>
+            <a class="rounded-lg border border-[#bcccdc] px-3 py-2 text-sm font-bold text-[#486581] hover:bg-slate-50" href="${formPath(form)}" download>Download PDF</a>
+          </div>
+        </article>
+      `).join("");
+
+      els.tabForms.innerHTML = `
+        <div class="space-y-6">
+          <section class="surface-card p-5 md:p-6">
+            <p class="text-sm font-black uppercase tracking-[.14em] text-[#2774ae]">Printable references</p>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-[#102a43]">Lottery forms</h1>
+            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-[#486581]">View the current printable forms directly in the workspace or download a PDF to print, distribute, or complete by hand.</p>
+          </section>
+          <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">${cards}</section>
+          <section class="surface-card overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#e6edf3] px-5 py-4">
+              <div><h2 id="formViewerTitle" class="font-black text-[#102a43]">${escapeHtml(selected.name)} form</h2><p class="mt-1 text-sm text-[#627d98]">Use your browser PDF controls to zoom, print, or save a copy.</p></div>
+              <div class="flex flex-wrap gap-2"><a id="formOpenLink" class="rounded-lg border border-[#bcccdc] px-3 py-2 text-sm font-bold text-[#486581] hover:bg-slate-50" href="${formPath(selected)}" target="_blank" rel="noopener">Open in new tab</a><a id="formDownloadLink" class="rounded-lg bg-[#003b5c] px-3 py-2 text-sm font-bold text-white hover:bg-[#002d47]" href="${formPath(selected)}" download>Download PDF</a></div>
+            </div>
+            <iframe id="formViewer" class="block h-[72vh] min-h-[620px] w-full bg-[#f7fafc]" src="${formPath(selected)}" title="${escapeHtml(selected.name)} lottery form"><p>Your browser cannot display this PDF. <a href="${formPath(selected)}" download>Download the form instead.</a></p></iframe>
+          </section>
+        </div>`;
+
+      document.querySelectorAll(".form-view-btn").forEach(button => button.addEventListener("click", () => {
+        const path = button.dataset.formPath;
+        const name = button.dataset.formName;
+        document.getElementById("formViewer").src = path;
+        document.getElementById("formViewer").title = `${name} lottery form`;
+        document.getElementById("formViewerTitle").textContent = `${name} form`;
+        document.getElementById("formOpenLink").href = path;
+        document.getElementById("formDownloadLink").href = path;
+        document.querySelectorAll(".form-view-btn").forEach(item => {
+          const isSelected = item === button;
+          item.setAttribute("aria-pressed", String(isSelected));
+          item.classList.toggle("bg-[#003b5c]", isSelected);
+          item.classList.toggle("text-white", isSelected);
+          item.classList.toggle("border", !isSelected);
+          item.classList.toggle("border-[#9fb3c8]", !isSelected);
+          item.classList.toggle("bg-white", !isSelected);
+          item.classList.toggle("text-[#245a78]", !isSelected);
+        });
+      }));
+    }
+
     function escapeHtml(value) {
       return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
@@ -4107,6 +4170,10 @@
       return renderPosterTabModule({ renderPosterTabImpl });
     }
 
+    function renderFormsTab() {
+      return renderFormsTabImpl();
+    }
+
     function renderWikiTab() {
       return renderWikiTabModule({ renderWikiTabImpl });
     }
@@ -4268,6 +4335,7 @@
       renderEntryTab();
       renderResultsTab();
       renderPosterTab();
+      renderFormsTab();
       renderWikiTab();
     }
 
