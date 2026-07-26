@@ -199,6 +199,7 @@
 
       /* Hide poster controls bar and waitlist */
       #posterModeRoot > div:first-child,
+      #posterEmailPrompt,
       #posterWaitlistSection { display: none !important; }
 
       /* One activity per page, day/time cards horizontal within each page */
@@ -1060,6 +1061,7 @@
 
     let pendingConfirmation = null;
     let selectedArchiveId = null;
+    let posterEmailPromptArchiveId = null;
     let activeTourStep = -1;
 
     function requestConfirmation({ title, message, confirmLabel = "Confirm", onConfirm }) {
@@ -3108,11 +3110,27 @@
       return { day: "", time: "", label };
     }
 
+    function buildPosterEmailHref(archive) {
+      const recipient = "bwresort@ha.ucla.edu";
+      const subject = `Bruin Woods activity poster - ${archive.title}`;
+      const publishedAt = new Date(archive.publishedAt).toLocaleString();
+      const body = [
+        "Please find the published Bruin Woods activity poster attached.",
+        "",
+        `Lottery: ${archive.title}`,
+        `Published: ${publishedAt}`,
+        "",
+        "Before sending, please attach the PDF saved from Poster Mode."
+      ].join("\n");
+      return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
     function renderPosterTabImpl() {
       const rows = getCurrentResultRows();
       const runAt = state.results.runAt ? new Date(state.results.runAt).toLocaleString() : "Not run yet";
       const defaultSort = "room";
       const { activeRows, waitlistRows } = buildPosterRows(defaultSort);
+      const emailPromptArchive = (state.archives || []).find(archive => archive.id === posterEmailPromptArchiveId);
 
       const grouped = activeRows.reduce((acc, row) => {
         const slot = resolvePosterSlotContext(row);
@@ -3170,6 +3188,23 @@
               <button id="posterPrintBtn" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white text-sm font-bold hover:bg-emerald-800">Print / PDF</button>
             </div>
           </div>
+
+          ${emailPromptArchive ? `
+            <section id="posterEmailPrompt" class="rounded-2xl border border-[#2774ae]/30 bg-[#edf6fc] p-4 md:p-5" tabindex="-1">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div class="max-w-2xl">
+                  <p class="text-xs font-black uppercase tracking-wide text-[#2774ae]">Poster published</p>
+                  <h4 class="mt-1 text-xl font-black text-[#102a43]">Send a copy to Bruin Woods Resort</h4>
+                  <p class="mt-1 text-sm leading-relaxed text-[#486581]">Save the poster as a PDF, then open a pre-addressed email and attach the saved file before sending it to <strong>bwresort@ha.ucla.edu</strong>.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button id="posterPromptPrintBtn" class="rounded-lg border border-[#9fb3c8] bg-white px-4 py-2 text-sm font-black text-[#245a78] hover:bg-[#f7fbfd]">1. Save as PDF</button>
+                  <a id="posterPromptEmailBtn" class="rounded-lg bg-[#003b5c] px-4 py-2 text-sm font-black text-[#ffd100] hover:bg-[#002d47]" href="${escapeHtml(buildPosterEmailHref(emailPromptArchive))}">2. Open email</a>
+                  <button id="dismissPosterEmailPromptBtn" class="rounded-lg px-3 py-2 text-sm font-bold text-[#627d98] hover:bg-white/70 hover:text-[#102a43]">Done</button>
+                </div>
+              </div>
+            </section>
+          ` : ""}
 
           <div id="posterAssignments" class="flex flex-col gap-6">${groupsMarkup}</div>
 
@@ -3229,6 +3264,11 @@
       document.getElementById("posterImportBackupBtn")?.addEventListener("click", importBackupPrompt);
       document.getElementById("posterRefreshBtn")?.addEventListener("click", () => renderPosterTab());
       document.getElementById("posterPrintBtn")?.addEventListener("click", () => window.print());
+      document.getElementById("posterPromptPrintBtn")?.addEventListener("click", () => window.print());
+      document.getElementById("dismissPosterEmailPromptBtn")?.addEventListener("click", () => {
+        posterEmailPromptArchiveId = null;
+        document.getElementById("posterEmailPrompt")?.remove();
+      });
       document.getElementById("posterExportCsvBtn")?.addEventListener("click", () => {
         const sortMode = document.getElementById("posterSortSelect")?.value || "room";
         const includeWaitlist = Boolean(document.getElementById("posterIncludeWaitlist")?.checked);
@@ -4102,6 +4142,7 @@
       const archive = { id: `archive-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, title: title.trim(), notes: notes.trim(), publishedAt: new Date().toISOString(), runAt: state.results.runAt, familyCount: state.families.length, assignmentCount: activeRows.length, config: structuredClone(buildPersistedConfig()), families: structuredClone(state.families), results: rows, metrics };
       state.archives.unshift(archive);
       selectedArchiveId = archive.id;
+      posterEmailPromptArchiveId = archive.id;
       try {
         await cloudPost("publishLotteryArchive");
       } catch (err) {
@@ -4110,6 +4151,7 @@
       render();
       renderPosterTab();
       setActiveTab("poster");
+      window.setTimeout(() => document.getElementById("posterEmailPrompt")?.focus(), 0);
     }
 
     const TOUR_STEPS = [
