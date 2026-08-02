@@ -39,3 +39,21 @@ Then open the localhost URL shown in the terminal.
 - `pwa.js`
 - `service-worker.js`
 - `.nojekyll`
+## Troubleshooting
+
+### Windows
+
+- If Windows SmartScreen warns on first open, choose More info, then Run anyway.
+- If the browser blocks local features, run the app from localhost instead of opening the file directly.
+
+### macOS
+
+- If Gatekeeper blocks opening, Control-click index.html, choose Open, then confirm Open.
+- If Safari blocks service worker behavior from a local file, run from localhost for full install and offline support.
+
+### Localhost setup
+
+1. Install Node.js if needed.
+2. Open Terminal (macOS) or PowerShell (Windows) in the app folder.
+3. Run: npx serve .
+4. Open the localhost URL shown in terminal output.
