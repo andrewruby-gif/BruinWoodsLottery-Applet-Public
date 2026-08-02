@@ -1,0 +1,19 @@
+{
+  "name": "Bruin Woods Lottery",
+  "short_name": "BW Lottery",
+  "description": "Operations workspace for the Bruin Woods waterfront lottery.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f8fb",
+  "theme_color": "#003b5c",
+  "icons": [
+    {
+      "src": "assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#003b5c" />
   <title>Bruin Woods Lottery</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/tailwind.css" />
   <style>
     :root {
@@ -174,8 +177,156 @@
     .tour-popover { position: fixed; z-index: 62; width: min(360px, calc(100vw - 2rem)); box-shadow: 0 24px 60px rgba(16, 42, 67, .34); }
     @keyframes riseIn { from { transform: translateY(7px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+    #posterAssignments { overflow-x: auto; }
+    .poster-sheet {
+      width: 100%;
+      min-width: 0;
+      min-height: 700px;
+      padding: 24px;
+      color: #080808;
+      background: #fff;
+      border: 1px solid #9fb3c8;
+      border-radius: 8px;
+      font-family: "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+      box-shadow: 0 12px 30px rgba(16, 42, 67, .12);
+    }
+    .poster-sheet-header { text-align: center; }
+    .poster-sheet-brand {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .poster-sheet-header h3 {
+      margin: 2px 0 5px;
+      font-size: 25px;
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .poster-sheet-rules {
+      max-width: 1200px;
+      margin: 0 auto 12px;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+    .poster-sheet-rules p { margin: 0; }
+    .poster-sheet-waterskiing .poster-sheet-rules {
+      max-width: none;
+      font-size: 9px;
+      text-align: left;
+    }
+    .poster-sheet-fishing .poster-sheet-rules p:first-child {
+      margin-bottom: 3px;
+      padding: 3px 6px;
+      background: #ffe100;
+    }
+    .poster-sheet-fishing .poster-sheet-rules p:not(:first-child) { font-weight: 900; }
+    .poster-sheet-pontoon-cruise .poster-sheet-rules p:nth-last-child(-n+2) {
+      padding: 2px 6px;
+      background: #d9effb;
+    }
+    .poster-sheet-kayaking .poster-sheet-footer strong { color: #d71938; }
+    .poster-day-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border: 2px solid #111;
+    }
+    .poster-day {
+      min-width: 0;
+      border-left: 2px solid #111;
+    }
+    .poster-day:first-child { border-left: 0; }
+    .poster-day > h4 {
+      margin: 0;
+      padding: 4px 3px;
+      border-bottom: 2px solid #111;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .poster-column-labels {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 46px;
+      min-height: 23px;
+      border-bottom: 1px solid #111;
+      font-size: 9px;
+      line-height: 1.1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .poster-column-labels span { padding: 3px 4px; }
+    .poster-column-labels span:last-child { border-left: 1px solid #111; text-align: center; }
+    .poster-column-labels-waterskiing { grid-template-columns: minmax(0, 1fr) 34px 46px; }
+    .poster-column-labels-waterskiing span:nth-child(2) { border-left: 1px solid #111; text-align: center; }
+    .poster-slot { border-top: 2px solid #111; }
+    .poster-column-labels + .poster-slot { border-top: 0; }
+    .poster-slot-time {
+      min-height: 24px;
+      padding: 5px 4px 2px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+      text-decoration: underline;
+    }
+    .poster-reservation-row {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr) 46px;
+      min-height: 25px;
+      font-size: 11px;
+      line-height: 1.05;
+    }
+    .poster-row-number { padding: 6px 2px 3px 4px; font-weight: 800; }
+    .poster-winner {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      padding: 5px 3px 3px;
+      border-bottom: 1px solid #111;
+      font-weight: 800;
+    }
+    .poster-room {
+      padding: 5px 2px 3px;
+      border-bottom: 1px solid #111;
+      border-left: 1px solid #111;
+      font-weight: 800;
+      text-align: center;
+    }
+    .poster-reservation-row-waterskiing { grid-template-columns: 22px minmax(0, 1fr) 34px 46px; }
+    .poster-type {
+      padding: 5px 2px 3px;
+      border-bottom: 1px solid #111;
+      border-left: 1px solid #111;
+      font-weight: 900;
+      text-align: center;
+    }
+    .poster-kayak-reservation { border-top: 1px solid #111; }
+    .poster-slot-time + .poster-kayak-reservation { border-top: 0; }
+    .poster-kayak-label {
+      min-height: 20px;
+      padding: 5px 8px 2px 22px;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .poster-slot-empty { min-height: 32px; }
+    .poster-sheet-footer {
+      display: grid;
+      gap: 3px;
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .poster-sheet-footer strong, .poster-sheet-footer span { display: block; }
+
     @media print {
-      @page { size: landscape; margin: 0.5cm; }
+      @page { size: letter landscape; margin: 0.35in; }
 
       /* Hide everything except the poster tab */
       .grain, #networkBanner, #syncingOverlay, .app-header, #sidePanel,
@@ -202,10 +353,19 @@
       #posterEmailPrompt,
       #posterWaitlistSection { display: none !important; }
 
-      /* One activity per page, day/time cards horizontal within each page */
       #posterAssignments { display: block !important; }
 
       .activity-page {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 7.75in !important;
+        max-height: 7.75in !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
         break-after: page !important;
         page-break-after: always !important;
       }
@@ -215,33 +375,19 @@
         page-break-after: avoid !important;
       }
 
-      .activity-page h3 {
-        font-size: 1.2rem !important;
-        margin-bottom: 0.3rem !important;
-        padding-bottom: 0.2rem !important;
-      }
-
-      .day-cards {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: flex-start !important;
-        gap: 0.35rem !important;
-        width: 100% !important;
-      }
-
-      .day-cards section {
-        flex: 1 1 0 !important;
-        min-width: 0 !important;
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-        font-size: 0.72rem !important;
-        padding: 0.4rem 0.5rem !important;
-        border-radius: 0.5rem !important;
-      }
-
-      .day-cards section p  { font-size: 0.65rem !important; margin-bottom: 0.2rem !important; }
-      .day-cards section li { font-size: 0.68rem !important; padding: 0.2rem 0 !important; }
+      .poster-sheet-header h3 { font-size: 21px !important; }
+      .poster-sheet-rules { margin-bottom: 8px !important; font-size: 8px !important; }
+      .poster-sheet-waterskiing .poster-sheet-rules { font-size: 7px !important; }
+      .poster-day > h4 { font-size: 12px !important; }
+      .poster-column-labels { min-height: 19px !important; font-size: 7px !important; }
+      .poster-slot-time { min-height: 19px !important; padding-top: 4px !important; font-size: 9px !important; }
+      .poster-reservation-row { min-height: 20px !important; font-size: 8px !important; }
+      .poster-row-number, .poster-winner, .poster-room { padding-top: 4px !important; }
+      .poster-type { padding-top: 4px !important; }
+      .poster-kayak-label { min-height: 15px !important; padding-top: 3px !important; font-size: 8px !important; }
+      .poster-sheet-waterskiing .poster-reservation-row { min-height: 16px !important; }
+      .poster-sheet-waterskiing .poster-slot-time { min-height: 16px !important; padding-top: 3px !important; }
+      .poster-sheet-footer { margin-top: 8px !important; font-size: 9px !important; }
     }
   </style>
 </head>
@@ -251,7 +397,7 @@
   <div id="networkBanner" class="hidden fixed top-2 left-1/2 -translate-x-1/2 z-50 max-w-2xl w-[95%] rounded-xl border border-rose-800/30 bg-rose-100 text-rose-900 px-4 py-2 text-sm font-semibold"></div>
 
   <div id="syncingOverlay" class="hidden fixed inset-0 bg-black/30 z-50 items-center justify-center">
-    <div class="rounded-2xl bg-white px-6 py-4 font-black text-emerald-900 shadow-2xl">☁️ Syncing with Cloud...</div>
+    <div class="rounded-2xl bg-white px-6 py-4 font-black text-emerald-900 shadow-2xl">Working...</div>
   </div>
 
   <header class="app-header relative z-20 bg-white">
@@ -268,7 +414,11 @@
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="wiki">Wiki &amp; tutorial</button>
         <button class="staff-tab-btn app-nav-btn px-3 py-2 rounded-lg text-sm" data-tab="config">Master settings</button>
       </nav>
-      <div class="flex items-center gap-2 text-sm text-[#486581] whitespace-nowrap"><span class="status-dot"></span><span id="syncStatus">Saved in this browser</span></div>
+      <div class="flex items-center gap-2 text-sm text-[#486581] whitespace-nowrap" aria-live="polite">
+        <span class="status-dot"></span><span id="syncStatus">Saved in this browser</span>
+        <span class="app-version" title="Application version">v1.0.5</span>
+        <button id="appUpdateBtn" class="app-update-btn hidden" type="button">Update available</button>
+      </div>
     </div>
   </header>
 
@@ -368,6 +518,8 @@
   </div>
 
   <input id="backupFileInput" type="file" accept="application/json" class="hidden" />
+
+  <script src="pwa.js" defer></script>
 
   <script>
     /* ── Tab Switching ─────────────────────────────────────────────────────────
@@ -543,7 +695,8 @@
       const allocationsByFamily = Object.fromEntries(families.map(f => [f.id, []]));
       const winsByFamily = Object.fromEntries(families.map(f => [f.id, 0]));
       const maxWins = Math.max(1, Number(state.config.maxWinsPerFamily) || 2);
-      const maxWinsWithOverflow = Math.max(maxWins, 4);
+      const allowOverflowWins = state.config.allowOverflowWins !== false;
+      const maxWinsWithOverflow = allowOverflowWins ? Math.max(maxWins, 4) : maxWins;
       const rows = [];
       const passDefs = [
         { pass: 1, choiceIndex: 0, choiceKey: "choice1", reverse: false },
@@ -553,6 +706,22 @@
       ];
       const familiesWithChoice1 = families.filter(f => f.form?.choices?.[0]?.activityId);
       let firstPassFairnessSatisfied = false;
+
+      function getCandidateSlotIds(choice, activity) {
+        const preferred = Array.isArray(choice?.slots) ? choice.slots.filter(Boolean) : [];
+        if (!choice?.noPreferenceOrder) return preferred;
+
+        return [...new Set(preferred)]
+          .map(slotId => getSlotById(slotId))
+          .filter(slot => slot && slot.activityId === activity.id)
+          .sort((a, b) => {
+            const capacityDiff = (capacityBySlot[b.id] || 0) - (capacityBySlot[a.id] || 0);
+            if (capacityDiff !== 0) return capacityDiff;
+            return sortSlotsByDayAndTime(a, b);
+          })
+          .map(slot => slot.id);
+      }
+
       function allocateSingle(family, passDef, forcedNumber = null, forcedReasonPrefix = "", winCap = maxWins) {
         if (winsByFamily[family.id] >= winCap) {
           rows.push(buildResultRow({ runAt, status: "waitlist", familyId: family.id, lastName: family.lastName, roomNumber: family.roomNumber, activityId: "", activityName: "", slotId: "", slotLabel: "", pass: passDef.pass, choiceNumber: passDef.choiceIndex + 1, lotteryNumber: forcedNumber ?? family.lotteryNumbers?.[passDef.choiceKey] ?? null, reason: `${forcedReasonPrefix}Skipped due to max wins cap` }));
@@ -562,7 +731,7 @@
         if (!choice?.activityId) return;
         const activity = getActivityById(choice.activityId);
         if (!activity) return;
-        const slotIds = choice.slots.filter(Boolean);
+        const slotIds = getCandidateSlotIds(choice, activity);
         let booked = false;
         for (const slotId of slotIds) {
           const slot = getSlotById(slotId);
@@ -577,7 +746,7 @@
         if (!booked) rows.push(buildResultRow({ runAt, status: "waitlist", familyId: family.id, lastName: family.lastName, roomNumber: family.roomNumber, activityId: activity.id, activityName: activity.name, slotId: "", slotLabel: "", pass: passDef.pass, choiceNumber: passDef.choiceIndex + 1, lotteryNumber: forcedNumber ?? family.lotteryNumbers?.[passDef.choiceKey] ?? null, reason: `${forcedReasonPrefix}All preferred slots full or conflicted` }));
       }
       passDefs.forEach(passDef => {
-        const passWinCap = (passDef.pass >= 3 && firstPassFairnessSatisfied) ? maxWinsWithOverflow : maxWins;
+        const passWinCap = (allowOverflowWins && passDef.pass >= 3 && firstPassFairnessSatisfied) ? maxWinsWithOverflow : maxWins;
         const pairMap = getValidPairMapForChoice(families, passDef.choiceIndex);
         const groups = buildPassGroups(families, pairMap, passDef.choiceKey, passDef.reverse);
         const fallbackSingles = [];
@@ -594,7 +763,13 @@
           if (!choiceA?.activityId || !choiceB?.activityId || choiceA.activityId !== choiceB.activityId) { fallbackSingles.push(familyA, familyB); return; }
           const activity = getActivityById(choiceA.activityId);
           if (!activity) { fallbackSingles.push(familyA, familyB); return; }
-          const sharedSlots = getSharedPairSlotIds(choiceA, choiceB);
+          const sharedSlots = getSharedPairSlotIds(choiceA, choiceB, {
+            noPreferenceOrderA: Boolean(choiceA?.noPreferenceOrder),
+            noPreferenceOrderB: Boolean(choiceB?.noPreferenceOrder),
+            getSlotById,
+            sortSlotsByDayAndTime,
+            capacityBySlot
+          });
           let placedPair = false;
           for (const slotId of sharedSlots) {
             const slot = getSlotById(slotId);
@@ -632,191 +807,73 @@
       return { rows, runAt };
     }
 
-    function createSyncClient(context) {
-      let databaseSha = localStorage.getItem(context.githubShaStorageKey) || "";
-
-      const getApiUrl = () => {
-        const path = context.githubDatabasePath.split("/").map(encodeURIComponent).join("/");
-        return `https://api.github.com/repos/${encodeURIComponent(context.githubOwner)}/${encodeURIComponent(context.githubRepo)}/contents/${path}`;
-      };
-      const getDatabaseUrl = () => `https://github.com/${context.githubOwner}/${context.githubRepo}/blob/${context.githubBranch}/${context.githubDatabasePath}`;
-      const normalizeDatabase = data => ({
-        families: Array.isArray(data?.families) ? data.families : [],
-        config: data?.config && typeof data.config === "object" ? data.config : {},
-        results: Array.isArray(data?.results) ? data.results : [],
-        archives: Array.isArray(data?.archives) ? data.archives : []
-      });
-      const encodeBase64Utf8 = text => {
-        const bytes = new TextEncoder().encode(text);
-        let binary = "";
-        for (let index = 0; index < bytes.length; index += 0x8000) binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
-        return btoa(binary);
-      };
-      const decodeBase64Utf8 = base64 => {
-        const binary = atob(String(base64 || "").replace(/\s/g, ""));
-        return new TextDecoder("utf-8", { fatal: true }).decode(Uint8Array.from(binary, character => character.charCodeAt(0)));
-      };
-      const initializeGitHubToken = () => {
-        const storedToken = localStorage.getItem(context.githubTokenStorageKey);
-        if (storedToken) return storedToken;
-        const token = prompt("Enter a GitHub Personal Access Token with access to this repository:");
-        if (!token || !token.trim()) throw context.createCloudError("A GitHub Personal Access Token is required to access the shared database.");
-        const normalizedToken = token.trim();
-        localStorage.setItem(context.githubTokenStorageKey, normalizedToken);
-        return normalizedToken;
-      };
-      const getHeaders = () => ({
-        Accept: "application/vnd.github+json",
-        Authorization: `Bearer ${initializeGitHubToken()}`,
-        "X-GitHub-Api-Version": "2022-11-28"
-      });
-      async function parseGithubJson(response, operation) {
-        const bodyText = await response.text();
-        try { return JSON.parse(bodyText); } catch (err) { throw context.createCloudError(`${operation} returned invalid JSON.`); }
+    function normalizeRecoveryDocument(candidate) {
+      if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) throw new TypeError("Recovery data must be a JSON object.");
+      let workspace;
+      if (candidate.format === RECOVERY_FORMAT) {
+        if (candidate.schemaVersion !== RECOVERY_SCHEMA_VERSION) throw new TypeError(`Unsupported recovery schema version: ${candidate.schemaVersion}.`);
+        workspace = candidate.workspace;
+      } else {
+        workspace = {
+          config: candidate.config,
+          families: candidate.families,
+          results: Array.isArray(candidate.results) ? { rows: candidate.results, runAt: null } : candidate.results,
+          archives: candidate.archives
+        };
       }
-      async function fetchDatabase() {
-        const response = await fetch(getApiUrl(), { method: "GET", headers: getHeaders(), cache: "no-store" });
-        const payload = await parseGithubJson(response, "GitHub database fetch");
-        if (!response.ok) {
-          if (response.status === 401 || response.status === 403) throw context.createCloudError("GitHub rejected the Personal Access Token or it cannot access this repository.");
-          throw context.createCloudError(payload.message || `GitHub database fetch failed (${response.status}).`);
+      if (!workspace || typeof workspace !== "object" || Array.isArray(workspace)) throw new TypeError("Recovery data is missing its workspace.");
+      if (!workspace.config || typeof workspace.config !== "object" || Array.isArray(workspace.config)) throw new TypeError("Recovery data has an invalid configuration.");
+      if (!Array.isArray(workspace.families)) throw new TypeError("Recovery data has an invalid families list.");
+      if (!workspace.results || typeof workspace.results !== "object" || !Array.isArray(workspace.results.rows)) throw new TypeError("Recovery data has invalid active results.");
+      if (!Array.isArray(workspace.archives || [])) throw new TypeError("Recovery data has an invalid archive history.");
+      return {
+        format: RECOVERY_FORMAT,
+        schemaVersion: RECOVERY_SCHEMA_VERSION,
+        savedAt: typeof candidate.savedAt === "string" ? candidate.savedAt : (typeof candidate.exportedAt === "string" ? candidate.exportedAt : new Date().toISOString()),
+        workspace: {
+          config: workspace.config,
+          families: workspace.families,
+          results: {
+            rows: workspace.results.rows,
+            runAt: typeof workspace.results.runAt === "string" ? workspace.results.runAt : null
+          },
+          archives: workspace.archives || []
         }
-        if (payload.type !== "file" || typeof payload.content !== "string" || !payload.sha) throw context.createCloudError("GitHub database response did not contain a file, Base64 content, and SHA.");
-        let database;
-        try { database = normalizeDatabase(JSON.parse(decodeBase64Utf8(payload.content))); }
-        catch (err) { throw context.createCloudError("database.json is not valid UTF-8 JSON with families, config, and results."); }
-        databaseSha = payload.sha;
-        localStorage.setItem(context.githubShaStorageKey, databaseSha);
-        return database;
-      }
-      async function saveDatabase(action) {
-        if (!databaseSha) await fetchDatabase();
-        const response = await fetch(getApiUrl(), {
-          method: "PUT",
-          headers: { ...getHeaders(), "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: `Update lottery database: ${action}`,
-            content: encodeBase64Utf8(JSON.stringify(normalizeDatabase(context.getDatabaseSnapshot()), null, 2)),
-            sha: databaseSha,
-            branch: context.githubBranch
-          })
-        });
-        const payload = await parseGithubJson(response, "GitHub database save");
-        if (response.status === 409) {
-          alert("Conflict: Another user updated the data");
-          const latestDatabase = await fetchDatabase();
-          context.applyStateSnapshot(latestDatabase);
-          context.saveStateSnapshotLocally({ dirty: false, lastCloudSyncAt: new Date().toISOString(), spreadsheetUrl: getDatabaseUrl() });
-          context.render?.();
-          const conflict = context.createCloudError("Conflict: Another user updated the data");
-          conflict.githubConflict = true;
-          throw conflict;
-        }
-        if (!response.ok) {
-          if (response.status === 401 || response.status === 403) throw context.createCloudError("GitHub rejected the Personal Access Token or it cannot write to this repository.");
-          throw context.createCloudError(payload.message || `GitHub database save failed (${response.status}).`);
-        }
-        if (!payload.content?.sha) throw context.createCloudError("GitHub saved the database but did not return its new SHA.");
-        databaseSha = payload.content.sha;
-        localStorage.setItem(context.githubShaStorageKey, databaseSha);
-        return { ok: true, action, serverTime: new Date().toISOString(), databaseUrl: getDatabaseUrl() };
-      }
-      async function cloudGet() {
-        try {
-          context.setSyncing(true, "☁️ Syncing with GitHub...");
-          context.hideBanner();
-          const database = await fetchDatabase();
-          context.setIsOfflineMode(false);
-          context.setSpreadsheetUrl(getDatabaseUrl());
-          return { ok: true, ...database, serverTime: new Date().toISOString(), databaseUrl: getDatabaseUrl() };
-        } catch (err) {
-          context.showBanner(`Cloud connection lost: ${context.getFriendlyCloudErrorMessage(err)}. Please retry.`);
-          throw err;
-        } finally { context.setSyncing(false); }
-      }
-      async function cloudPost(action) {
-        try {
-          context.setSyncing(true, "☁️ Saving to GitHub...");
-          context.hideBanner();
-          const payload = await saveDatabase(action);
-          context.setIsOfflineMode(false);
-          context.setSpreadsheetUrl(payload.databaseUrl);
-          context.saveStateSnapshotLocally({ dirty: false, lastCloudSyncAt: payload.serverTime, spreadsheetUrl: context.getSpreadsheetUrl() });
-          return payload;
-        } catch (err) {
-          if (err?.githubConflict || !context.isRecoverableCloudError(err)) {
-            if (!err?.githubConflict) context.showBanner(`Cloud save failed: ${context.getFriendlyCloudErrorMessage(err)}`);
-            throw err;
-          }
-          context.setIsOfflineMode(true);
-          context.saveStateSnapshotLocally({ dirty: true });
-          const detail = context.getFriendlyCloudErrorMessage(err).replace(/[.\s]+$/, "");
-          context.showBanner(`Cloud unavailable: ${detail}. Working in local-only mode; changes are saved in this browser.`);
-          return { ok: true, action, localOnly: true, serverTime: new Date().toISOString() };
-        } finally { context.setSyncing(false); }
-      }
-      async function syncFromCloud() {
-        try {
-          const payload = await cloudGet();
-          const localSnapshot = context.loadLocalSnapshot();
-          const localMeta = context.getSnapshotMeta(localSnapshot);
-          context.setSpreadsheetUrl(payload.databaseUrl || localMeta.spreadsheetUrl || context.getSpreadsheetUrl());
-          if (localMeta.dirty && localSnapshot) {
-            context.setIsOfflineMode(false);
-            context.applyStateSnapshot(localSnapshot);
-            context.saveStateSnapshotLocally({ dirty: true, lastCloudSyncAt: payload.serverTime || localMeta.lastCloudSyncAt || context.getLastCloudSyncAt(), spreadsheetUrl: context.getSpreadsheetUrl() });
-            context.showBanner("GitHub data is available, but this browser has unsynced local changes. Review or export them before replacing with cloud data.");
-            return;
-          }
-          context.applyStateSnapshot(payload);
-          context.saveStateSnapshotLocally({ dirty: false, lastCloudSyncAt: payload.serverTime || context.getLastCloudSyncAt(), spreadsheetUrl: context.getSpreadsheetUrl() });
-        } catch (err) {
-          const localSnapshot = context.loadLocalSnapshot();
-          if (!localSnapshot) { context.setIsOfflineMode(true); throw err; }
-          context.setIsOfflineMode(true);
-          const localMeta = context.getSnapshotMeta(localSnapshot);
-          context.setHasPendingLocalChanges(localMeta.dirty);
-          context.setLastCloudSyncAt(localMeta.lastCloudSyncAt);
-          context.setSpreadsheetUrl(localMeta.spreadsheetUrl || context.getSpreadsheetUrl());
-          context.applyStateSnapshot(localSnapshot);
-          context.showBanner(localMeta.dirty ? "Cloud unavailable. Continuing with unsynced local changes from this browser." : "Cloud unavailable. Loaded the most recent local backup from this browser.");
-        }
-      }
-      return { cloudGet, cloudPost, syncFromCloud };
+      };
     }
-
     function applyStateSnapshotModule(snapshot, context) {
-      const cfg = snapshot?.config || {};
+      const recovery = normalizeRecoveryDocument(snapshot);
+      const cfg = recovery.workspace.config;
       context.assignConfigToState(cfg, cfg.defaultTemplate || context.hardcodedDefaultConfig());
-      context.state.families = context.normalizeFamilies(snapshot?.families || []);
-      context.state.results.rows = Array.isArray(snapshot?.results) ? snapshot.results : [];
-      context.state.results.runAt = context.computeLatestRunAt(context.state.results.rows);
-      context.state.archives = Array.isArray(snapshot?.archives) ? snapshot.archives : [];
+      context.state.families = context.normalizeFamilies(recovery.workspace.families);
+      context.state.results.rows = recovery.workspace.results.rows;
+      context.state.results.runAt = recovery.workspace.results.runAt || context.computeLatestRunAt(context.state.results.rows);
+      context.state.archives = recovery.workspace.archives;
     }
     function getStateSnapshotModule(context) {
-      return { config: context.buildPersistedConfig(), families: context.state.families, results: context.state.results.rows, archives: context.state.archives || [], __meta: { dirty: context.getHasPendingLocalChanges(), lastCloudSyncAt: context.getLastCloudSyncAt(), spreadsheetUrl: context.getSpreadsheetUrl() } };
+      return normalizeRecoveryDocument({
+        format: RECOVERY_FORMAT,
+        schemaVersion: RECOVERY_SCHEMA_VERSION,
+        savedAt: new Date().toISOString(),
+        workspace: {
+          config: context.buildPersistedConfig(),
+          families: context.state.families,
+          results: { rows: context.state.results.rows, runAt: context.state.results.runAt },
+          archives: context.state.archives || []
+        }
+      });
     }
     function buildBackupPayloadModule(context) {
-      return { exportedAt: new Date().toISOString(), families: context.state.families, config: context.buildPersistedConfig(), results: context.getCurrentResultRows(), archives: context.state.archives || [] };
+      return getStateSnapshotModule(context);
     }
-    function getSnapshotMetaModule(snapshot) {
-      const meta = snapshot?.__meta;
-      if (!meta || typeof meta !== "object") return { dirty: false, lastCloudSyncAt: null };
-      return { dirty: Boolean(meta.dirty), lastCloudSyncAt: typeof meta.lastCloudSyncAt === "string" ? meta.lastCloudSyncAt : null, spreadsheetUrl: typeof meta.spreadsheetUrl === "string" ? meta.spreadsheetUrl : "" };
-    }
-    function saveStateSnapshotLocallyModule(options = {}, context) {
-      if (Object.prototype.hasOwnProperty.call(options, "dirty")) context.setHasPendingLocalChanges(Boolean(options.dirty));
-      if (Object.prototype.hasOwnProperty.call(options, "lastCloudSyncAt")) context.setLastCloudSyncAt(options.lastCloudSyncAt || null);
-      if (Object.prototype.hasOwnProperty.call(options, "spreadsheetUrl")) context.setSpreadsheetUrl(options.spreadsheetUrl || "");
+    function saveStateSnapshotLocallyModule(context) {
       try { localStorage.setItem(context.storageKey, JSON.stringify(getStateSnapshotModule(context))); } catch (err) { console.warn("Unable to save local backup", err); }
     }
     function loadLocalSnapshotModule(storageKey) {
       try {
         const raw = localStorage.getItem(storageKey);
         if (!raw) return null;
-        const snapshot = JSON.parse(raw);
-        if (!snapshot || typeof snapshot !== "object") return null;
-        return snapshot;
+        return normalizeRecoveryDocument(JSON.parse(raw));
       } catch (err) { console.warn("Unable to read local backup", err); return null; }
     }
 
@@ -853,13 +910,9 @@
     function renderPosterTabModule(context) { return context.renderPosterTabImpl(); }
     function renderWikiTabModule(context) { return context.renderWikiTabImpl(); }
 
-    const GITHUB_OWNER = "andrewruby-gif";
-    const GITHUB_REPO = "BruinWoodsLottery";
-    const GITHUB_BRANCH = "main";
-    const GITHUB_DATABASE_PATH = "database.json";
-    const GITHUB_TOKEN_STORAGE_KEY = "summer-camp-serpentine-github-token";
-    const GITHUB_SHA_STORAGE_KEY = "summer-camp-serpentine-github-database-sha";
-    const DEFAULT_SPREADSHEET_URL = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${GITHUB_DATABASE_PATH}`;
+    const RECOVERY_FORMAT = "bruin-woods-lottery-recovery";
+    const RECOVERY_SCHEMA_VERSION = 1;
+    const PUBLIC_RELEASE = true;
     const STORAGE_KEY = "summer-camp-serpentine-v1";
     const SIDEBAR_PREF_KEY = `${STORAGE_KEY}-sidebar-collapsed`;
     const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -926,42 +979,44 @@
         id: "waterskiing",
         name: "Waterskiing",
         slots: [
-          { id: "ski-mon-0700", label: "Mon 7:00 AM", day: "Mon", time: "7:00 AM", capacity: 1 },
-          { id: "ski-tue-0700", label: "Tue 7:00 AM", day: "Tue", time: "7:00 AM", capacity: 1 },
-          { id: "ski-wed-0700", label: "Wed 7:00 AM", day: "Wed", time: "7:00 AM", capacity: 1 },
-          { id: "ski-thu-0700", label: "Thu 7:00 AM", day: "Thu", time: "7:00 AM", capacity: 1 },
-          { id: "ski-fri-0700", label: "Fri 7:00 AM", day: "Fri", time: "7:00 AM", capacity: 1 },
-          { id: "ski-mon-0845", label: "Mon 8:45 AM", day: "Mon", time: "8:45 AM", capacity: 1 },
-          { id: "ski-tue-0845", label: "Tue 8:45 AM", day: "Tue", time: "8:45 AM", capacity: 1 },
-          { id: "ski-wed-0845", label: "Wed 8:45 AM", day: "Wed", time: "8:45 AM", capacity: 1 },
-          { id: "ski-thu-0845", label: "Thu 8:45 AM", day: "Thu", time: "8:45 AM", capacity: 1 },
-          { id: "ski-fri-0845", label: "Fri 8:45 AM", day: "Fri", time: "8:45 AM", capacity: 1 },
-          { id: "ski-mon-1000", label: "Mon 10:00 AM", day: "Mon", time: "10:00 AM", capacity: 1 },
-          { id: "ski-tue-1000", label: "Tue 10:00 AM", day: "Tue", time: "10:00 AM", capacity: 1 },
-          { id: "ski-wed-1000", label: "Wed 10:00 AM", day: "Wed", time: "10:00 AM", capacity: 1 },
-          { id: "ski-thu-1000", label: "Thu 10:00 AM", day: "Thu", time: "10:00 AM", capacity: 1 },
-          { id: "ski-fri-1000", label: "Fri 10:00 AM", day: "Fri", time: "10:00 AM", capacity: 1 },
-          { id: "ski-mon-1115", label: "Mon 11:15 AM", day: "Mon", time: "11:15 AM", capacity: 1 },
-          { id: "ski-tue-1115", label: "Tue 11:15 AM", day: "Tue", time: "11:15 AM", capacity: 1 },
-          { id: "ski-wed-1115", label: "Wed 11:15 AM", day: "Wed", time: "11:15 AM", capacity: 1 },
-          { id: "ski-thu-1115", label: "Thu 11:15 AM", day: "Thu", time: "11:15 AM", capacity: 1 },
-          { id: "ski-fri-1115", label: "Fri 11:15 AM", day: "Fri", time: "11:15 AM", capacity: 1 },
-          { id: "ski-tue-1515", label: "Tue 3:15 PM", day: "Tue", time: "3:15 PM", capacity: 1 },
-          { id: "ski-wed-1515", label: "Wed 3:15 PM", day: "Wed", time: "3:15 PM", capacity: 1 },
-          { id: "ski-tue-1630", label: "Tue 4:30 PM", day: "Tue", time: "4:30 PM", capacity: 1 },
-          { id: "ski-wed-1630", label: "Wed 4:30 PM", day: "Wed", time: "4:30 PM", capacity: 1 },
-          { id: "ski-tue-1745", label: "Tue 5:45 PM", day: "Tue", time: "5:45 PM", capacity: 1 },
-          { id: "ski-wed-1745", label: "Wed 5:45 PM", day: "Wed", time: "5:45 PM", capacity: 1 }
+          { id: "ski-mon-0700", label: "Mon 7:00 AM", day: "Mon", time: "7:00 AM", capacity: 2 },
+          { id: "ski-tue-0700", label: "Tue 7:00 AM", day: "Tue", time: "7:00 AM", capacity: 2 },
+          { id: "ski-wed-0700", label: "Wed 7:00 AM", day: "Wed", time: "7:00 AM", capacity: 2 },
+          { id: "ski-thu-0700", label: "Thu 7:00 AM", day: "Thu", time: "7:00 AM", capacity: 2 },
+          { id: "ski-fri-0700", label: "Fri 7:00 AM", day: "Fri", time: "7:00 AM", capacity: 2 },
+          { id: "ski-mon-0845", label: "Mon 8:45 AM", day: "Mon", time: "8:45 AM", capacity: 2 },
+          { id: "ski-tue-0845", label: "Tue 8:45 AM", day: "Tue", time: "8:45 AM", capacity: 2 },
+          { id: "ski-wed-0845", label: "Wed 8:45 AM", day: "Wed", time: "8:45 AM", capacity: 2 },
+          { id: "ski-thu-0845", label: "Thu 8:45 AM", day: "Thu", time: "8:45 AM", capacity: 2 },
+          { id: "ski-fri-0845", label: "Fri 8:45 AM", day: "Fri", time: "8:45 AM", capacity: 2 },
+          { id: "ski-mon-1000", label: "Mon 10:00 AM", day: "Mon", time: "10:00 AM", capacity: 2 },
+          { id: "ski-tue-1000", label: "Tue 10:00 AM", day: "Tue", time: "10:00 AM", capacity: 2 },
+          { id: "ski-wed-1000", label: "Wed 10:00 AM", day: "Wed", time: "10:00 AM", capacity: 2 },
+          { id: "ski-thu-1000", label: "Thu 10:00 AM", day: "Thu", time: "10:00 AM", capacity: 2 },
+          { id: "ski-fri-1000", label: "Fri 10:00 AM", day: "Fri", time: "10:00 AM", capacity: 2 },
+          { id: "ski-mon-1115", label: "Mon 11:15 AM", day: "Mon", time: "11:15 AM", capacity: 2 },
+          { id: "ski-tue-1115", label: "Tue 11:15 AM", day: "Tue", time: "11:15 AM", capacity: 2 },
+          { id: "ski-wed-1115", label: "Wed 11:15 AM", day: "Wed", time: "11:15 AM", capacity: 2 },
+          { id: "ski-thu-1115", label: "Thu 11:15 AM", day: "Thu", time: "11:15 AM", capacity: 2 },
+          { id: "ski-fri-1115", label: "Fri 11:15 AM", day: "Fri", time: "11:15 AM", capacity: 2 },
+          { id: "ski-tue-1515", label: "Tue 3:15 PM", day: "Tue", time: "3:15 PM", capacity: 2 },
+          { id: "ski-wed-1515", label: "Wed 3:15 PM", day: "Wed", time: "3:15 PM", capacity: 2 },
+          { id: "ski-tue-1630", label: "Tue 4:30 PM", day: "Tue", time: "4:30 PM", capacity: 2 },
+          { id: "ski-wed-1630", label: "Wed 4:30 PM", day: "Wed", time: "4:30 PM", capacity: 2 },
+          { id: "ski-tue-1745", label: "Tue 5:45 PM", day: "Tue", time: "5:45 PM", capacity: 2 },
+          { id: "ski-wed-1745", label: "Wed 5:45 PM", day: "Wed", time: "5:45 PM", capacity: 2 }
         ]
       }
     ]);
 
+    const MIN_PREFERRED_TIMES_PER_CHOICE = 3;
+
     const defaultFamilyForm = () => ({
       choices: [
-        { activityId: "", slots: ["", "", ""], excludedDays: [], pairRoomNumber: "", anyAvailable: false, skiingTypes: [] },
-        { activityId: "", slots: ["", "", ""], excludedDays: [], pairRoomNumber: "", anyAvailable: false, skiingTypes: [] },
-        { activityId: "", slots: ["", "", ""], excludedDays: [], pairRoomNumber: "", anyAvailable: false, skiingTypes: [] },
-        { activityId: "", slots: ["", "", ""], excludedDays: [], pairRoomNumber: "", anyAvailable: false, skiingTypes: [] }
+        { activityId: "", slots: Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => ""), excludedDays: [], pairRoomNumber: "", anyAvailable: false, noPreferenceOrder: false, skiingTypes: [] },
+        { activityId: "", slots: Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => ""), excludedDays: [], pairRoomNumber: "", anyAvailable: false, noPreferenceOrder: false, skiingTypes: [] },
+        { activityId: "", slots: Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => ""), excludedDays: [], pairRoomNumber: "", anyAvailable: false, noPreferenceOrder: false, skiingTypes: [] },
+        { activityId: "", slots: Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => ""), excludedDays: [], pairRoomNumber: "", anyAvailable: false, noPreferenceOrder: false, skiingTypes: [] }
       ],
       anyAvailable: false
     });
@@ -969,6 +1024,7 @@
     const hardcodedDefaultConfig = () => ({
       expectedFamilies: 40,
       maxWinsPerFamily: 2,
+      allowOverflowWins: true,
       activities: defaultActivities()
     });
 
@@ -993,13 +1049,9 @@
     };
 
     let state = defaultState();
-    let isOfflineMode = false;
-    let hasPendingLocalChanges = false;
-    let lastCloudSyncAt = null;
     let isSidebarCollapsed = false;
     let currentlyEditingFamilyId = null;
     let modalDraft = null;
-    let spreadsheetUrl = DEFAULT_SPREADSHEET_URL;
 
     const els = {
       networkBanner: document.getElementById("networkBanner"),
@@ -1016,10 +1068,7 @@
       tabHistory: document.getElementById("tab-history"),
       lastNameInput: document.getElementById("lastNameInput"),
       roomNumberInput: document.getElementById("roomNumberInput"),
-      openSheetBtn: document.getElementById("openSheetBtn"),
       loadDemoBtn: document.getElementById("loadDemoBtn"),
-      syncLocalBtn: document.getElementById("syncLocalBtn"),
-      discardLocalBtn: document.getElementById("discardLocalBtn"),
       resetBtn: document.getElementById("resetBtn"),
       exportBackupBtn: document.getElementById("exportBackupBtn"),
       importBackupBtn: document.getElementById("importBackupBtn"),
@@ -1100,14 +1149,8 @@
       els.networkBanner.textContent = "";
     }
 
-    function getIdleSyncLabel() {
-      if (isOfflineMode) return "Offline Mode (Local Only)";
-      if (hasPendingLocalChanges) return "Cloud Reachable - Local Changes Pending";
-      return "Cloud Idle";
-    }
-
-    function setSyncing(isSyncing, label = getIdleSyncLabel()) {
-      els.syncStatus.textContent = label;
+    function setSyncing(isSyncing, label = "Saved in this browser") {
+      els.syncStatus.textContent = isSyncing ? label : "Saved in this browser";
       els.syncingOverlay.classList.toggle("hidden", !isSyncing);
       els.syncingOverlay.classList.toggle("flex", isSyncing);
       document.querySelectorAll(".requires-sync-lock").forEach(btn => {
@@ -1115,43 +1158,6 @@
         btn.classList.toggle("opacity-50", isSyncing);
         btn.classList.toggle("cursor-not-allowed", isSyncing);
       });
-      updateSyncLocalButtonState(isSyncing);
-    }
-
-    function updateSyncLocalButtonState(isSyncing = false) {
-      if (!els.syncLocalBtn) return;
-      const disabled = isSyncing || !hasPendingLocalChanges;
-      els.syncLocalBtn.disabled = disabled;
-      els.syncLocalBtn.textContent = hasPendingLocalChanges ? "Sync Local Changes to Cloud" : "Local Changes Synced";
-      els.syncLocalBtn.classList.toggle("opacity-50", disabled);
-      els.syncLocalBtn.classList.toggle("cursor-not-allowed", disabled);
-
-      if (els.discardLocalBtn) {
-        els.discardLocalBtn.disabled = disabled;
-        els.discardLocalBtn.classList.toggle("opacity-50", disabled);
-        els.discardLocalBtn.classList.toggle("cursor-not-allowed", disabled);
-      }
-    }
-
-    function getMisconfiguredEndpointMessage() {
-      return "GitHub database access is unavailable. Verify the repository settings and use a Personal Access Token with repository contents read/write access.";
-    }
-
-    function createCloudError(message, recoverable = false) {
-      const err = new Error(message);
-      err.cloudFallbackEligible = recoverable;
-      return err;
-    }
-
-    function isRecoverableCloudError(err) {
-      return err instanceof TypeError || Boolean(err?.cloudFallbackEligible);
-    }
-
-    function getFriendlyCloudErrorMessage(err) {
-      if (err instanceof TypeError) {
-        return getMisconfiguredEndpointMessage();
-      }
-      return err?.message || "Unknown cloud error.";
     }
 
     function computeLatestRunAt(rows) {
@@ -1173,20 +1179,39 @@
         && !slotIds.has("ski-mon-0845");
     }
 
+    function usesSingleWinnerWaterskiTemplate(activities) {
+      const configured = activities.find(activity => activity.id === "waterskiing");
+      const standard = defaultActivities().find(activity => activity.id === "waterskiing");
+      if (!configured || configured.slots.length !== standard.slots.length) return false;
+      const configuredById = new Map(configured.slots.map(slot => [slot.id, slot]));
+      return standard.slots.every(slot => configuredById.get(slot.id)?.capacity === 1);
+    }
+
+    function upgradeWaterskiCapacity(activities) {
+      if (!usesSingleWinnerWaterskiTemplate(activities)) return activities;
+      return activities.map(activity => activity.id === "waterskiing"
+        ? { ...activity, slots: activity.slots.map(slot => ({ ...slot, capacity: 2 })) }
+        : activity);
+    }
+
     function normalizeActivityConfig(activities) {
       if (!Array.isArray(activities) || !activities.length) return defaultActivities();
       if (usesLegacyActivityTemplate(activities)) return defaultActivities();
-      return activities;
+      return upgradeWaterskiCapacity(activities);
     }
 
     function normalizeConfigSnapshot(cfg, fallback = hardcodedDefaultConfig()) {
       const expectedFamilies = Number(cfg?.expectedFamilies) || Number(fallback.expectedFamilies) || 40;
       const maxWinsPerFamily = Number(cfg?.maxWinsPerFamily) || Number(fallback.maxWinsPerFamily) || 2;
+      const allowOverflowWins = cfg?.allowOverflowWins === undefined
+        ? fallback.allowOverflowWins !== false
+        : cfg.allowOverflowWins !== false;
       const activities = normalizeActivityConfig(cfg?.activities || fallback.activities);
       const wikiNotes = typeof cfg?.wikiNotes === "string" ? cfg.wikiNotes : (typeof fallback.wikiNotes === "string" ? fallback.wikiNotes : "");
       return {
         expectedFamilies,
         maxWinsPerFamily,
+        allowOverflowWins,
         activities,
         wikiNotes
       };
@@ -1200,6 +1225,7 @@
       const normalizedConfig = normalizeConfigSnapshot(configSnapshot, hardcodedDefaultConfig());
       state.config.expectedFamilies = normalizedConfig.expectedFamilies;
       state.config.maxWinsPerFamily = normalizedConfig.maxWinsPerFamily;
+      state.config.allowOverflowWins = normalizedConfig.allowOverflowWins;
       state.config.activities = normalizedConfig.activities;
       state.config.wikiNotes = normalizedConfig.wikiNotes;
       state.config.defaultTemplate = normalizeConfigSnapshot(defaultTemplate, hardcodedDefaultConfig());
@@ -1209,6 +1235,7 @@
       const mergedSnapshot = {
         expectedFamilies: state.config.expectedFamilies,
         maxWinsPerFamily: state.config.maxWinsPerFamily,
+        allowOverflowWins: state.config.allowOverflowWins,
         activities: getActivities(),
         wikiNotes: state.config.wikiNotes,
         ...(configSnapshot || {})
@@ -1217,6 +1244,7 @@
       return {
         expectedFamilies: normalizedConfig.expectedFamilies,
         maxWinsPerFamily: normalizedConfig.maxWinsPerFamily,
+        allowOverflowWins: normalizedConfig.allowOverflowWins,
         activities: normalizedConfig.activities,
         wikiNotes: normalizedConfig.wikiNotes,
         defaultTemplate: normalizeConfigSnapshot(defaultTemplate, hardcodedDefaultConfig())
@@ -1226,8 +1254,10 @@
     function collectConfigDraftFromInputs() {
       const expectedInput = document.getElementById("expectedFamiliesInput");
       const maxWinsInput = document.getElementById("maxWinsInput");
+      const allowOverflowWinsInput = document.getElementById("allowOverflowWinsInput");
       const expectedFamilies = parseInt(expectedInput?.value ?? state.config.expectedFamilies, 10);
       const maxWinsPerFamily = parseInt(maxWinsInput?.value ?? state.config.maxWinsPerFamily, 10);
+      const allowOverflowWins = Boolean(allowOverflowWinsInput?.checked ?? state.config.allowOverflowWins);
 
       if (!Number.isFinite(expectedFamilies) || expectedFamilies < state.families.length) {
         alert(`Expected families must be at least ${state.families.length}.`);
@@ -1253,6 +1283,7 @@
       return {
         expectedFamilies,
         maxWinsPerFamily,
+        allowOverflowWins,
         activities: nextActivities
       };
     }
@@ -1287,14 +1318,6 @@
       return isChosenOnForm || isAssignedInResults;
     }
 
-    function setSpreadsheetUrl(url) {
-      spreadsheetUrl = typeof url === "string" && url.trim() ? url : DEFAULT_SPREADSHEET_URL;
-      if (els.openSheetBtn) {
-        els.openSheetBtn.disabled = !spreadsheetUrl;
-        els.openSheetBtn.title = spreadsheetUrl || "GitHub database link unavailable until cloud sync succeeds.";
-      }
-    }
-
     function applyStateSnapshot(snapshot) {
       return applyStateSnapshotModule(snapshot, {
         state,
@@ -1308,10 +1331,7 @@
     function getStateSnapshot() {
       return getStateSnapshotModule({
         state,
-        buildPersistedConfig,
-        getHasPendingLocalChanges: () => hasPendingLocalChanges,
-        getLastCloudSyncAt: () => lastCloudSyncAt,
-        getSpreadsheetUrl: () => spreadsheetUrl
+        buildPersistedConfig
       });
     }
 
@@ -1323,22 +1343,11 @@
       });
     }
 
-    function getSnapshotMeta(snapshot) {
-      return getSnapshotMetaModule(snapshot);
-    }
-
-    function saveStateSnapshotLocally(options = {}) {
-      return saveStateSnapshotLocallyModule(options, {
+    function saveStateSnapshotLocally() {
+      return saveStateSnapshotLocallyModule({
         storageKey: STORAGE_KEY,
         buildPersistedConfig,
-        state,
-        getCurrentResultRows,
-        getHasPendingLocalChanges: () => hasPendingLocalChanges,
-        setHasPendingLocalChanges: (value) => { hasPendingLocalChanges = Boolean(value); },
-        getLastCloudSyncAt: () => lastCloudSyncAt,
-        setLastCloudSyncAt: (value) => { lastCloudSyncAt = value || null; },
-        getSpreadsheetUrl: () => spreadsheetUrl,
-        setSpreadsheetUrl
+        state
       });
     }
 
@@ -1346,17 +1355,9 @@
       return loadLocalSnapshotModule(STORAGE_KEY);
     }
 
-    let syncClient = null;
-
     function saveLocalState() {
       saveStateSnapshotLocally();
       return { ok: true, serverTime: new Date().toISOString() };
-    }
-
-    // Transitional adapter for the still-inline controller. This performs no
-    // network operation; callers can be migrated to saveLocalState directly.
-    function cloudPost() {
-      return saveLocalState();
     }
 
     function normalizeChoices(choices) {
@@ -1364,8 +1365,10 @@
       if (!Array.isArray(choices)) return base;
       return base.map((row, i) => {
         const inc = choices[i] || {};
-        const slots = Array.isArray(inc.slots) ? inc.slots.slice(0, 3) : ["", "", ""];
-        while (slots.length < 3) slots.push("");
+        const slots = Array.isArray(inc.slots)
+          ? inc.slots.map(slot => String(slot || ""))
+          : [];
+        while (slots.length < MIN_PREFERRED_TIMES_PER_CHOICE) slots.push("");
         const excludedDays = Array.isArray(inc.excludedDays) ? inc.excludedDays.filter(d => dayOrder.includes(d)) : [];
         const skiingTypes = Array.isArray(inc.skiingTypes)
           ? inc.skiingTypes.filter(type => WATERSKIING_TYPE_OPTIONS.some(option => option.id === type))
@@ -1376,6 +1379,7 @@
           excludedDays,
           pairRoomNumber: String(inc.pairRoomNumber || ""),
           anyAvailable: Boolean(inc.anyAvailable),
+          noPreferenceOrder: Boolean(inc.noPreferenceOrder),
           skiingTypes
         };
       });
@@ -1733,8 +1737,15 @@
               <span class="text-sm font-semibold text-emerald-900">Max Activity Wins Allowed Per Family</span>
               <input id="maxWinsInput" type="number" min="1" class="mt-1 w-full rounded-lg border border-emerald-800/25 px-3 py-2" value="${state.config.maxWinsPerFamily}" />
             </label>
+            <label class="mt-3 flex items-start gap-2 text-sm text-emerald-900">
+              <input id="allowOverflowWinsInput" type="checkbox" class="mt-1 h-4 w-4 accent-emerald-700" ${state.config.allowOverflowWins !== false ? "checked" : ""} />
+              <span>
+                <span class="font-semibold">Allow overflow wins above max cap</span>
+                <span class="mt-0.5 block text-xs text-emerald-900/75">When enabled, passes 3-4 can grant up to 4 wins after every Choice 1 family has had a pass.</span>
+              </span>
+            </label>
             <p class="mt-2 text-sm text-gray-700">Checked in now: <strong>${state.families.length}</strong></p>
-            <p class="mt-2 text-xs text-emerald-900/75">Manual slot adds and removals update the page immediately. Click Save Configuration to sync those edits to the cloud.</p>
+            <p class="mt-2 text-xs text-emerald-900/75">Manual slot adds and removals update the page immediately. Click Save Configuration to keep those edits in this browser.</p>
             <button id="saveConfigBtn" class="requires-sync-lock mt-4 px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold hover:bg-emerald-800">Save Configuration</button>
             <button id="saveDefaultConfigBtn" class="requires-sync-lock mt-2 px-4 py-2 rounded-xl bg-[#003b5c] text-[#ffd100] font-bold hover:bg-[#005587]">Set Current Config As Default</button>
           </div>
@@ -1750,7 +1761,7 @@
         assignConfigToState(draft);
 
         try {
-          await cloudPost("updateConfig", {
+          await saveLocalState("updateConfig", {
             config: buildPersistedConfig(draft)
           });
           render();
@@ -1766,7 +1777,7 @@
         assignConfigToState(draft, draft);
 
         try {
-          await cloudPost("updateConfig", {
+          await saveLocalState("updateConfig", {
             config: buildPersistedConfig(draft, draft)
           });
           render();
@@ -1866,7 +1877,7 @@
             <div class="flex flex-wrap items-end gap-2">
               <label class="block flex-1 min-w-[140px]">
                 <span class="text-xs font-semibold uppercase tracking-wide text-[#003b5c]/80">Last Name</span>
-                <input id="quickAddLastName" type="text" autocomplete="off" placeholder="Garcia" class="mt-1 w-full rounded-xl border border-[#003b5c]/25 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-[#2774ae] focus:outline-none" />
+                <input id="quickAddLastName" type="text" autocomplete="off" placeholder="Example family" class="mt-1 w-full rounded-xl border border-[#003b5c]/25 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-[#2774ae] focus:outline-none" />
               </label>
               <label class="block flex-1 min-w-[110px] max-w-[160px]">
                 <span class="text-xs font-semibold uppercase tracking-wide text-[#003b5c]/80">Room Number</span>
@@ -2009,9 +2020,9 @@
 
         try {
           state.families.push(family);
-          await cloudPost("saveFamily", { family });
+          await saveLocalState("saveFamily", { family });
           state.results = { rows: [], runAt: null };
-          await cloudPost("saveResults", { results: [] });
+          await saveLocalState("saveResults", { results: [] });
           renderEntryTab();
           openEntryModal(family.id);
         } catch (err) {
@@ -2044,7 +2055,8 @@
       const slots = activity ? activity.slots : [];
       const sortedSlots = slots.slice().sort(sortSlotsByDayAndTime);
 
-      const slotDropdowns = [0, 1, 2].map(slotIdx => {
+      const slotValues = Array.isArray(choice.slots) ? choice.slots : [];
+      const slotDropdowns = slotValues.map((_, slotIdx) => {
         const selectedElsewhere = new Set(choice.slots.map((s, i) => i !== slotIdx ? s : null).filter(Boolean));
         const current = choice.slots[slotIdx];
         const dayGroups = dayOrder.map(day => {
@@ -2058,15 +2070,28 @@
         }).join("");
 
         return `
-          <label class="block mt-2">
-            <span class="text-xs font-semibold text-emerald-800">Subpreference ${slotIdx + 1}</span>
-            <select data-choice-slot="${idx}" data-slot-index="${slotIdx}" tabindex="${100 + idx * 10 + slotIdx}" class="mt-1 w-full rounded-lg border border-emerald-800/25 px-3 py-2">
-              <option value="">Select time slot</option>
-              ${dayGroups}
-            </select>
-          </label>
+          <div class="mt-2 flex items-end gap-2">
+            <label class="block flex-1">
+              <span class="text-xs font-semibold text-emerald-800">Subpreference ${slotIdx + 1}</span>
+              <select data-choice-slot="${idx}" data-slot-index="${slotIdx}" tabindex="${100 + idx * 20 + slotIdx}" class="mt-1 w-full rounded-lg border border-emerald-800/25 px-3 py-2">
+                <option value="">Select time slot</option>
+                ${dayGroups}
+              </select>
+            </label>
+            <button
+              type="button"
+              data-remove-choice-slot="${idx}"
+              data-slot-index="${slotIdx}"
+              class="rounded-lg px-2 py-2 text-xs font-bold text-rose-700 hover:bg-rose-50 ${slotValues.length <= MIN_PREFERRED_TIMES_PER_CHOICE ? "opacity-40 cursor-not-allowed" : ""}"
+              ${slotValues.length <= MIN_PREFERRED_TIMES_PER_CHOICE ? "disabled" : ""}
+            >Remove</button>
+          </div>
         `;
       }).join("");
+
+      const slotControlButtons = activity
+        ? `<button type="button" data-add-choice-slot="${idx}" class="mt-2 rounded-lg border border-emerald-800/20 bg-white px-2.5 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50">+ Add preferred time</button>`
+        : "";
 
       const activityDays = activity
         ? [...new Set(activity.slots.map(s => s.day))].sort((a, b) => dayOrder.indexOf(a) - dayOrder.indexOf(b))
@@ -2110,6 +2135,12 @@
           </label>
           <div class="${choice.activityId ? "" : "hidden"}">
             ${slotDropdowns}
+            ${slotControlButtons}
+            <label class="mt-3 inline-flex items-center gap-2">
+              <input type="checkbox" data-choice-unordered-slots="${idx}" tabindex="${146 + idx * 10}" class="h-4 w-4 accent-emerald-700" ${choice.noPreferenceOrder ? "checked" : ""} />
+              <span class="font-semibold text-emerald-900">No preference order for selected times</span>
+            </label>
+            <p class="mt-1 text-xs text-emerald-900/75">Enable when the paper form lists times but does not rank them. The draw will treat chosen times as equally preferred.</p>
             <div class="mt-3 border-t border-emerald-900/10 pt-3">
               <span class="text-xs font-semibold text-rose-800 uppercase tracking-wide">Exclude Days — skip these days for this activity</span>
               <div class="mt-2 flex flex-wrap gap-3">${dayCheckboxes}</div>
@@ -2149,10 +2180,11 @@
           const idx = Number(button.dataset.clearChoice);
           modalDraft.choices[idx] = {
             activityId: "",
-            slots: ["", "", ""],
+            slots: Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => ""),
             excludedDays: [],
             pairRoomNumber: "",
             anyAvailable: false,
+            noPreferenceOrder: false,
             skiingTypes: []
           };
           renderModalBody();
@@ -2163,9 +2195,32 @@
         select.addEventListener("change", (event) => {
           const idx = Number(event.target.dataset.choiceActivity);
           modalDraft.choices[idx].activityId = event.target.value;
-          modalDraft.choices[idx].slots = ["", "", ""];
+          modalDraft.choices[idx].slots = Array.from({ length: MIN_PREFERRED_TIMES_PER_CHOICE }, () => "");
           modalDraft.choices[idx].excludedDays = [];
+          modalDraft.choices[idx].noPreferenceOrder = false;
           modalDraft.choices[idx].skiingTypes = [];
+          renderModalBody();
+        });
+      });
+
+      els.modalBody.querySelectorAll("button[data-add-choice-slot]").forEach(button => {
+        button.addEventListener("click", () => {
+          const idx = Number(button.dataset.addChoiceSlot);
+          const slots = Array.isArray(modalDraft.choices[idx].slots) ? modalDraft.choices[idx].slots : [];
+          modalDraft.choices[idx].slots = [...slots, ""];
+          renderModalBody();
+        });
+      });
+
+      els.modalBody.querySelectorAll("button[data-remove-choice-slot]").forEach(button => {
+        button.addEventListener("click", () => {
+          const idx = Number(button.dataset.removeChoiceSlot);
+          const slotIndex = Number(button.dataset.slotIndex);
+          const slots = Array.isArray(modalDraft.choices[idx].slots) ? modalDraft.choices[idx].slots.slice() : [];
+          if (slots.length <= MIN_PREFERRED_TIMES_PER_CHOICE) return;
+          slots.splice(slotIndex, 1);
+          while (slots.length < MIN_PREFERRED_TIMES_PER_CHOICE) slots.push("");
+          modalDraft.choices[idx].slots = slots;
           renderModalBody();
         });
       });
@@ -2221,6 +2276,13 @@
         input.addEventListener("change", () => {
           const idx = Number(input.dataset.choiceAnyAvailable);
           modalDraft.choices[idx].anyAvailable = input.checked;
+        });
+      });
+
+      els.modalBody.querySelectorAll("input[data-choice-unordered-slots]").forEach(input => {
+        input.addEventListener("change", () => {
+          const idx = Number(input.dataset.choiceUnorderedSlots);
+          modalDraft.choices[idx].noPreferenceOrder = input.checked;
         });
       });
     }
@@ -2303,8 +2365,8 @@
       state.results = { rows: [], runAt: null };
 
       try {
-        await cloudPost("saveFamily", { family });
-        await cloudPost("saveResults", { results: [] });
+        await saveLocalState("saveFamily", { family });
+        await saveLocalState("saveResults", { results: [] });
         closeEditFamilyModal();
         render();
       } catch (err) {
@@ -2318,8 +2380,8 @@
       state.families.splice(idx, 1);
       state.results = { rows: [], runAt: null };
       try {
-        await cloudPost("deleteFamily", { familyId });
-        await cloudPost("saveResults", { results: [] });
+        await saveLocalState("deleteFamily", { familyId });
+        await saveLocalState("saveResults", { results: [] });
         render();
       } catch (err) {
         // handled globally
@@ -2373,7 +2435,7 @@
       state.results = { rows: [], runAt: null };
 
       try {
-        await cloudPost("saveFamily", { family });
+        await saveLocalState("saveFamily", { family });
         const buddies = new Map();
         for (const choice of family.form.choices) {
           const buddyRoom = (choice.pairRoomNumber || "").trim();
@@ -2383,9 +2445,9 @@
           }
         }
         for (const buddy of buddies.values()) {
-          await cloudPost("saveFamily", { family: buddy });
+          await saveLocalState("saveFamily", { family: buddy });
         }
-        await cloudPost("saveResults", { results: [] });
+        await saveLocalState("saveResults", { results: [] });
         closeEntryModal();
         render();
       } catch (err) {
@@ -2448,9 +2510,23 @@
       return groups;
     }
 
-    function getSharedPairSlotIds(choiceA, choiceB) {
+    function getSharedPairSlotIds(choiceA, choiceB, options = {}) {
       const aSlots = choiceA?.slots?.filter(Boolean) || [];
       const bSlots = choiceB?.slots?.filter(Boolean) || [];
+
+      if (options.noPreferenceOrderA || options.noPreferenceOrderB) {
+        return [...new Set(aSlots.filter(slot => bSlots.includes(slot)))]
+          .map(slotId => options.getSlotById ? options.getSlotById(slotId) : null)
+          .filter(Boolean)
+          .sort((a, b) => {
+            const capacityDiff = ((options.capacityBySlot?.[b.id]) || 0) - ((options.capacityBySlot?.[a.id]) || 0);
+            if (capacityDiff !== 0) return capacityDiff;
+            if (options.sortSlotsByDayAndTime) return options.sortSlotsByDayAndTime(a, b);
+            return String(a.id).localeCompare(String(b.id));
+          })
+          .map(slot => slot.id);
+      }
+
       const bIndex = new Map(bSlots.map((slot, idx) => [slot, idx]));
 
       return aSlots
@@ -2549,7 +2625,7 @@
       row.overrideAt = new Date().toISOString();
 
       try {
-        await cloudPost("saveResults", { results: getCurrentResultRows() });
+        await saveLocalState("saveResults", { results: getCurrentResultRows() });
         renderResultsTab();
       } catch (err) {
         // handled globally
@@ -2596,7 +2672,7 @@
       row.overrideAt = new Date().toISOString();
 
       try {
-        await cloudPost("saveResults", { results: rows });
+        await saveLocalState("saveResults", { results: rows });
         renderResultsTab();
       } catch (err) {
         // handled globally
@@ -2863,7 +2939,7 @@
           const result = runSerpentineLottery();
           state.results.rows = result.rows;
           state.results.runAt = result.runAt;
-          await cloudPost("saveResults", { results: result.rows });
+          await saveLocalState("saveResults", { results: result.rows });
           const assignedCount = result.rows.filter(row => ["allocated", "catchall", "manual"].includes(row.status)).length;
           const waitlistCount = result.rows.filter(row => row.status === "waitlist").length;
           render();
@@ -3054,35 +3130,141 @@
       );
     }
 
-    function buildActivityPagesMarkup(byActivityMap) {
-      return [...byActivityMap.entries()].filter(([activityName]) => Boolean(activityName)).map(([activityName, groups]) => {
-        const times = [...new Set(groups.map(g => g.time))].sort((a, b) => parseTimeToMinutes(b) - parseTimeToMinutes(a));
-        const lookup = new Map(groups.map(g => [`${g.day}__${g.time}`, g]));
-        const headerCells = dayOrder.map(day =>
-          `<th class="px-2 py-1.5 text-center text-sm font-black text-emerald-900 border-l border-emerald-900/20">${day}</th>`
-        ).join("");
-        const bodyRows = times.map(time => {
-          const dayCells = dayOrder.map(day => {
-            const group = lookup.get(`${day}__${time}`);
-            const people = (group?.rows || []).map(row =>
-              `<li class="py-0.5 border-b border-dashed border-emerald-900/10 last:border-b-0 text-sm"><span class="font-bold">${row.lastName}${row.activityName === "Waterskiing" ? escapeHtml(formatWaterskiingTypesForRow(row)) : ""}${escapeHtml(formatExpectedPartySizeForRow(row))}</span> <span class="text-emerald-900/60 text-xs">Rm ${row.roomNumber}</span></li>`
-            ).join("");
-            return `<td class="px-2 py-1.5 align-top border-l border-emerald-900/20"><ul>${people}</ul></td>`;
-          }).join("");
-          return `<tr class="border-t border-emerald-900/10"><td class="pr-2 py-1.5 align-top whitespace-nowrap text-xs font-bold text-emerald-900/60">${time}</td>${dayCells}</tr>`;
+    const POSTER_SHEET_DETAILS = {
+      waterskiing: {
+        title: "Waterskiing Lottery Winners",
+        notices: [
+          "Water ski slots are filled by lottery. Two skiers go each trip and ski approximately 25 minutes each.",
+          "A lottery win permits you one skier (person) per reservation.",
+          "If you have never skied before, please go to MacKenzie's Ski School at the Village (909-337-3814) to have a professional ski lesson before skiing at BRUIN WOODS. Experience is required.",
+          "You must be a Polar or older with previous experience to waterski/wakeboard.",
+          "Reservations must be confirmed by noon the previous day.",
+          "Wakeboarding: W, Kneeboarding: K"
+        ],
+        columns: ["Name", "Type", "Rm. #"]
+      },
+      kayaking: {
+        title: "Kayaking Lottery Winners",
+        notices: [
+          "ALL guests must wear life vests when in the kayak.",
+          "This activity is available to ages 13 and up, but minors must be accompanied by an adult.",
+          "You must take an ALA Human Powered Vessel Test online before your kayak trip.",
+          "https://www.ala-ca.org/human_powered_vessels.php",
+          "Meet at the horseshoe pits at your scheduled time."
+        ],
+        columns: ["Family name / participants", "Room #"]
+      },
+      fishing: {
+        title: "Fishing Lottery Winners",
+        notices: [
+          "Age Restriction: MUST BE A CUB OR UP TO GO ON THE BOAT",
+          "YOU MUST CONFIRM BY NOON ON THE DAY BEFORE THE TRIP TO BE GUARANTEED YOUR SPOT. EACH FAMILY RECEIVES 3 SPOTS.",
+          "A FISHING LICENSE IS REQUIRED AND MAY BE PURCHASED ONLINE ($21.09) - SEE FRONT DESK."
+        ],
+        columns: ["Family name / participants", "Room #"]
+      },
+      "pontoon-cruise": {
+        title: "Pontoon Boat Cruise Lottery Winners",
+        notices: [
+          "LIFEJACKETS REQUIRED FOR THOSE 12 YEARS AND UNDER.",
+          "MEET AT THE HORSESHOE PITS, AND ARRIVE 10 MINUTES PRIOR TO YOUR DEPARTURE TIME TO ENSURE WE MEET OUR COMPLEX SCHEDULE.",
+          "BE SURE TO CANCEL IF YOU CHANGE YOUR MIND. YOU MUST CONFIRM BY NOON ON THE DAY BEFORE THE TRIP.",
+          "A LOTTERY WIN ENTITLES A FAMILY 6 SEATS ON THE BOAT; ONE FAMILY NAME PER NUMBERED LINE.",
+          "SOME TIME SLOTS ACCOMMODATE UP TO 4 FAMILIES, OTHERS 2."
+        ],
+        columns: ["Family name / participants", "Room #"]
+      }
+    };
+
+    const POSTER_DAY_NAMES = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday" };
+
+    function formatPosterSlotTime(activityId, slot) {
+      const knownRanges = {
+        fishing: {
+          "6:00 AM": "6:00-8:00am",
+          "8:30 AM": "8:30-10:15am",
+          "4:45 PM": "4:45-6:45pm"
+        },
+        kayaking: {
+          "7:00 AM": "7:00-8:00am",
+          "6:30 PM": "6:30-7:30pm"
+        },
+        waterskiing: {
+          "7:00 AM": "7:00-8:00am",
+          "8:45 AM": "8:45-9:45am",
+          "10:00 AM": "10:00-11:00am",
+          "11:15 AM": "11:15am-12:15pm",
+          "3:15 PM": "3:15-4:15pm",
+          "4:30 PM": "4:30-5:30pm",
+          "5:45 PM": "5:45-6:45pm"
+        }
+      };
+      if (knownRanges[activityId]?.[slot.time]) return knownRanges[activityId][slot.time];
+      return String(slot.label || slot.time || "Time TBD").replace(/^(?:Mon|Tue|Wed|Thu|Fri)\s+/i, "");
+    }
+
+    function formatPosterWaterskiType(row) {
+      const formatted = formatWaterskiingTypesForRow(row).replace(/[()]/g, "");
+      if (!formatted) return "";
+      const codes = formatted.split(",").map(value => value.trim()).map(value => {
+        if (value === "Wakeboarding") return "W";
+        if (value === "Kneeboarding") return "K";
+        if (value === "Double Ski" || value === "Single Ski") return "S";
+        return value;
+      });
+      return [...new Set(codes)].join("/");
+    }
+
+    function buildPosterReservationRows(activity, slot, assignedRows) {
+      if (activity.id === "kayaking") {
+        const kayakCount = Math.max(Number(slot.capacity) || 0, assignedRows.length, 1);
+        return Array.from({ length: kayakCount }, (_, index) => {
+          const row = assignedRows[index];
+          const partySize = row ? formatExpectedPartySizeForRow(row) : "";
+          return `<div class="poster-kayak-reservation"><div class="poster-kayak-label">Kayak ${index + 1}</div><div class="poster-reservation-row"><span class="poster-row-number">1.</span><span class="poster-winner">${row ? `${escapeHtml(row.lastName || "")}${escapeHtml(partySize)}` : "&nbsp;"}</span><span class="poster-room">${row?.roomNumber ? escapeHtml(row.roomNumber) : "&nbsp;"}</span></div><div class="poster-reservation-row"><span class="poster-row-number">2.</span><span class="poster-winner">&nbsp;</span><span class="poster-room">&nbsp;</span></div></div>`;
         }).join("");
+      }
+
+      const templateMinimum = activity.id === "waterskiing" ? 2 : 1;
+      const rowCount = Math.max(Number(slot.capacity) || 0, assignedRows.length, templateMinimum);
+      return Array.from({ length: rowCount }, (_, index) => {
+        const row = assignedRows[index];
+        const partySize = row && activity.id !== "waterskiing" ? formatExpectedPartySizeForRow(row) : "";
+        const typeCell = activity.id === "waterskiing" ? `<span class="poster-type">${row ? escapeHtml(formatPosterWaterskiType(row)) : "&nbsp;"}</span>` : "";
+        return `<div class="poster-reservation-row${activity.id === "waterskiing" ? " poster-reservation-row-waterskiing" : ""}"><span class="poster-row-number">${index + 1}.</span><span class="poster-winner">${row ? `${escapeHtml(row.lastName || "")}${escapeHtml(partySize)}` : "&nbsp;"}</span>${typeCell}<span class="poster-room">${row?.roomNumber ? escapeHtml(row.roomNumber) : "&nbsp;"}</span></div>`;
+      }).join("");
+    }
+
+    function buildActivityPagesMarkup(activeRows) {
+      const assignmentsBySlot = activeRows.reduce((lookup, row) => {
+        if (!lookup.has(row.slotId)) lookup.set(row.slotId, []);
+        lookup.get(row.slotId).push(row);
+        return lookup;
+      }, new Map());
+
+      return getActivities().slice().sort((a, b) => posterActivityRank(a.name) - posterActivityRank(b.name) || a.name.localeCompare(b.name)).map(activity => {
+        const details = POSTER_SHEET_DETAILS[activity.id] || {
+          title: `${activity.name} Lottery Winners`,
+          notices: ["Only Bruin Woods staff may enter or remove reservations."],
+          columns: ["Family name", "Room #"]
+        };
+        const dayColumns = dayOrder.map(day => {
+          const slots = activity.slots.filter(slot => slot.day === day).slice().sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+          const slotsMarkup = slots.length ? slots.map(slot => {
+            const assigned = assignmentsBySlot.get(slot.id) || [];
+            return `<section class="poster-slot"><div class="poster-slot-time">${escapeHtml(formatPosterSlotTime(activity.id, slot))}</div>${buildPosterReservationRows(activity, slot, assigned)}</section>`;
+          }).join("") : `<section class="poster-slot poster-slot-empty" aria-label="No scheduled trip"></section>`;
+          const columnLabels = details.columns.map(column => `<span>${escapeHtml(column)}</span>`).join("");
+          return `<div class="poster-day"><h4>${escapeHtml(POSTER_DAY_NAMES[day] || day)}</h4><div class="poster-column-labels poster-column-labels-${activity.id}">${columnLabels}</div>${slotsMarkup}</div>`;
+        }).join("");
+        const noticesMarkup = details.notices.map(notice => `<p>${escapeHtml(notice)}</p>`).join("");
         return `
-          <div class="activity-page rounded-2xl border border-emerald-900/20 bg-white p-4">
-            <h3 class="text-2xl font-black text-emerald-900 mb-3 pb-2 border-b border-emerald-900/20">${activityName}</h3>
-            <table class="w-full border-collapse"><thead><tr><th class="pr-2 py-1.5 text-left text-xs font-bold uppercase tracking-wide text-emerald-900/50 w-20">Time</th>${headerCells}</tr></thead><tbody>${bodyRows}</tbody></table>
-          </div>
-        `;
-      }).join("") || `
-        <section class="rounded-2xl border border-dashed border-[#9fb3c8] bg-[#f8fbfd] p-8 text-center">
-          <p class="text-lg font-black text-[#102a43]">No completed lottery is available in this browser.</p>
-          <p class="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-[#486581]">Poster view uses the active lottery saved in this browser. Run the lottery here, or import the browser backup that contains the completed results.</p>
-          <div class="mt-5 flex flex-wrap justify-center gap-2"><button class="staff-tab-btn rounded-lg bg-[#003b5c] px-4 py-2 text-sm font-black text-[#ffd100] hover:bg-[#002d47]" data-tab="results">Open lottery review</button><button id="posterImportBackupBtn" class="rounded-lg border border-[#9fb3c8] bg-white px-4 py-2 text-sm font-black text-[#245a78] hover:bg-[#edf7fc]">Import browser backup</button></div>
-        </section>`;
+          <article class="activity-page poster-sheet poster-sheet-${activity.id}">
+            <header class="poster-sheet-header"><div class="poster-sheet-brand">UCLA Bruin Woods</div><h3>${escapeHtml(details.title)}</h3><div class="poster-sheet-rules">${noticesMarkup}</div></header>
+            <div class="poster-day-grid">${dayColumns}</div>
+            <footer class="poster-sheet-footer"><strong>ONLY BRUIN WOODS STAFF MAY ENTER OR REMOVE RESERVATIONS.</strong><span>GUESTS, PLEASE DO NOT WRITE ON THIS FORM.</span></footer>
+          </article>`;
+      }).join("");
     }
 
     function posterActivityRank(activityName) {
@@ -3111,7 +3293,6 @@
     }
 
     function buildPosterEmailHref(archive) {
-      const recipient = "bwresort@ha.ucla.edu";
       const subject = `Bruin Woods activity poster - ${archive.title}`;
       const publishedAt = new Date(archive.publishedAt).toLocaleString();
       const body = [
@@ -3122,7 +3303,7 @@
         "",
         "Before sending, please attach the PDF saved from Poster Mode."
       ].join("\n");
-      return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
     function renderPosterTabImpl() {
@@ -3132,36 +3313,7 @@
       const { activeRows, waitlistRows } = buildPosterRows(defaultSort);
       const emailPromptArchive = (state.archives || []).find(archive => archive.id === posterEmailPromptArchiveId);
 
-      const grouped = activeRows.reduce((acc, row) => {
-        const slot = resolvePosterSlotContext(row);
-        const resolvedActivityName = row.activityName || getActivityById(row.activityId)?.name || slot?.activityName || "Unmapped activity";
-        const groupKey = `${resolvedActivityName}__${slot?.day || ""}__${slot?.time || ""}`;
-        if (!acc.has(groupKey)) {
-          acc.set(groupKey, {
-            activityName: resolvedActivityName,
-            day: slot?.day || "",
-            time: slot?.time || "",
-            slotLabel: row.slotLabel,
-            rows: []
-          });
-        }
-        acc.get(groupKey).rows.push(row);
-        return acc;
-      }, new Map());
-
-      const sortedGroups = [...grouped.values()].sort((a, b) => {
-        const actDiff = String(a.activityName || "").localeCompare(String(b.activityName || ""));
-        if (actDiff !== 0) return actDiff;
-        const dayDiff = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
-        if (dayDiff !== 0) return dayDiff;
-        return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
-      });
-      const byActivity = sortedGroups.reduce((acc, group) => {
-        if (!acc.has(group.activityName)) acc.set(group.activityName, []);
-        acc.get(group.activityName).push(group);
-        return acc;
-      }, new Map());
-      const groupsMarkup = buildActivityPagesMarkup(sortPosterActivities(byActivity));
+      const groupsMarkup = buildActivityPagesMarkup(activeRows);
 
       const waitlistMarkup = waitlistRows
         .map(row => `<li class="py-1 border-b border-dashed border-gray-300 text-sm">P${row.pass} ${row.lastName} (Room ${row.roomNumber}) - ${row.activityName || "N/A"}</li>`)
@@ -3194,8 +3346,8 @@
               <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="max-w-2xl">
                   <p class="text-xs font-black uppercase tracking-wide text-[#2774ae]">Poster published</p>
-                  <h4 class="mt-1 text-xl font-black text-[#102a43]">Send a copy to Bruin Woods Resort</h4>
-                  <p class="mt-1 text-sm leading-relaxed text-[#486581]">Save the poster as a PDF, then open a pre-addressed email and attach the saved file before sending it to <strong>bwresort@ha.ucla.edu</strong>.</p>
+                  <h4 class="mt-1 text-xl font-black text-[#102a43]">Send a copy of the poster</h4>
+                  <p class="mt-1 text-sm leading-relaxed text-[#486581]">Save the poster as a PDF, then open an email draft, choose the appropriate recipient, and attach the saved file.</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
                   <button id="posterPromptPrintBtn" class="rounded-lg border border-[#9fb3c8] bg-white px-4 py-2 text-sm font-black text-[#245a78] hover:bg-[#f7fbfd]">1. Save as PDF</button>
@@ -3219,36 +3371,7 @@
         const sortMode = document.getElementById("posterSortSelect")?.value || "room";
         const includeWaitlist = Boolean(document.getElementById("posterIncludeWaitlist")?.checked);
         const updated = buildPosterRows(sortMode);
-        const updatedGrouped = updated.activeRows.reduce((acc, row) => {
-          const slot = resolvePosterSlotContext(row);
-          const resolvedActivityName = row.activityName || getActivityById(row.activityId)?.name || slot?.activityName || "Unmapped activity";
-          const groupKey = `${resolvedActivityName}__${slot?.day || ""}__${slot?.time || ""}`;
-          if (!acc.has(groupKey)) {
-            acc.set(groupKey, {
-              activityName: resolvedActivityName,
-              day: slot?.day || "",
-              time: slot?.time || "",
-              slotLabel: row.slotLabel,
-              rows: []
-            });
-          }
-          acc.get(groupKey).rows.push(row);
-          return acc;
-        }, new Map());
-
-        const sortedUpdatedGroups = [...updatedGrouped.values()].sort((a, b) => {
-          const actDiff = String(a.activityName || "").localeCompare(String(b.activityName || ""));
-          if (actDiff !== 0) return actDiff;
-          const dayDiff = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
-          if (dayDiff !== 0) return dayDiff;
-          return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
-        });
-        const byActivityUpdated = sortedUpdatedGroups.reduce((acc, group) => {
-          if (!acc.has(group.activityName)) acc.set(group.activityName, []);
-          acc.get(group.activityName).push(group);
-          return acc;
-        }, new Map());
-        const reassignedMarkup = buildActivityPagesMarkup(sortPosterActivities(byActivityUpdated));
+        const reassignedMarkup = buildActivityPagesMarkup(updated.activeRows);
 
         const listRoot = document.getElementById("posterAssignments");
         if (listRoot) listRoot.innerHTML = reassignedMarkup;
@@ -3304,7 +3427,7 @@
     }
 
     function generateDemoFamilies() {
-      const names = ["Garcia", "Nguyen", "Patel", "Miller", "Thompson", "Wong", "Kim", "Davis", "Rodriguez", "Ali", "Singh", "Hernandez", "Baker", "Chen", "Lopez", "Scott"];
+      const names = Array.from({ length: 16 }, (_, index) => `Demo Family ${String(index + 1).padStart(2, "0")}`);
       const used = new Set();
       const families = [];
 
@@ -3355,7 +3478,7 @@
       }
       state.results = { rows: [], runAt: null };
       try {
-        await cloudPost("repairDemoLotteryNumbers");
+        await saveLocalState("repairDemoLotteryNumbers");
         render();
         setActiveTab("results");
         alert("Demo lottery numbers regenerated. Review validation, then run the lottery.");
@@ -3370,15 +3493,15 @@
       state.families = families;
       state.results = { rows: [], runAt: null };
       try {
-        await cloudPost("resetAll", {
+        await saveLocalState("resetAll", {
           config: {
             expectedFamilies: state.config.expectedFamilies,
             maxWinsPerFamily: state.config.maxWinsPerFamily,
             activities: getActivities()
           }
         });
-        await cloudPost("bulkUpsertFamilies", { families });
-        await cloudPost("saveResults", { results: [] });
+        await saveLocalState("bulkUpsertFamilies", { families });
+        await saveLocalState("saveResults", { results: [] });
         render();
       } catch (err) {
         // handled globally
@@ -3405,7 +3528,7 @@
       }));
 
       return [
-        { paper: "Family name", field: "Add New Family → Last Name", sample: "Garcia", check: "Use the family name exactly as written on the check-in form." },
+        { paper: "Family name", field: "Add New Family → Last Name", sample: "Example Family", check: "Use the family name exactly as written on the check-in form." },
         { paper: "Room number", field: "Add New Family → Room Number", sample: "214", check: "Room number is the unique operational identifier; search first to avoid a duplicate." },
         { paper: "Lottery ticket numbers", field: "Family record → Lottery Numbers", sample: "C1 #014 · C2 #143 · C3 #226 · C4 #358", check: "The app draws these at check-in. Verify the printed ticket before entering any choices." },
         ...choiceRows,
@@ -3480,12 +3603,12 @@
               <div>
                 <p class="text-xs font-black uppercase tracking-[.14em] text-[#2774ae]">Training reference · read only</p>
                 <h4 class="mt-1 text-lg font-black text-[#102a43]">Example Form Data Matrix</h4>
-                <p class="mt-2 max-w-3xl text-sm text-[#486581]">Use this fictional Garcia family example to translate a paper form into the matching fields in the app. This guide never creates, changes, or saves live lottery data.</p>
+                <p class="mt-2 max-w-3xl text-sm text-[#486581]">Use this fictional family example to translate a paper form into the matching fields in the app. This guide never creates, changes, or saves live lottery data.</p>
               </div>
               <span class="rounded-full border border-[#b9d8ea] bg-[#edf7fc] px-3 py-1 text-xs font-black text-[#176b4d]">Fictional training data</span>
             </div>
             <div class="mt-4 grid gap-2 md:grid-cols-3">
-              <div class="rounded-xl border border-[#d5e3ec] bg-[#f8fbfd] p-3"><span class="block text-xs font-black uppercase tracking-wide text-[#627d98]">Example family</span><span class="mt-1 block font-black text-[#102a43]">Garcia · Room 214</span></div>
+              <div class="rounded-xl border border-[#d5e3ec] bg-[#f8fbfd] p-3"><span class="block text-xs font-black uppercase tracking-wide text-[#627d98]">Example family</span><span class="mt-1 block font-black text-[#102a43]">Example Family · Room 214</span></div>
               <div class="rounded-xl border border-[#d5e3ec] bg-[#f8fbfd] p-3"><span class="block text-xs font-black uppercase tracking-wide text-[#627d98]">Choice order</span><span class="mt-1 block font-black text-[#102a43]">1 → 4, exactly as marked</span></div>
               <div class="rounded-xl border border-[#d5e3ec] bg-[#f8fbfd] p-3"><span class="block text-xs font-black uppercase tracking-wide text-[#627d98]">Entry rule</span><span class="mt-1 block font-black text-[#102a43]">Never infer a blank response</span></div>
             </div>
@@ -3521,8 +3644,8 @@
                 <p class="mt-1">A: Search by room in Data Entry. Room number is unique and prevents duplicate check-ins.</p>
               </article>
               <article class="rounded-xl border border-emerald-900/10 bg-emerald-50/40 p-3">
-                <p class="font-bold text-emerald-900">Q: What if cloud sync fails during event operations?</p>
-                <p class="mt-1">A: The app falls back to local mode and flags pending changes. Use &quot;Sync Local Changes to Cloud&quot; once connectivity returns.</p>
+                <p class="font-bold text-emerald-900">Q: How do I protect progress during event operations?</p>
+                <p class="mt-1">A: Changes save automatically in this browser. Export a recovery file at key checkpoints and store it somewhere accessible to your team.</p>
               </article>
               <article class="rounded-xl border border-emerald-900/10 bg-emerald-50/40 p-3">
                 <p class="font-bold text-emerald-900">Q: When should we use manual reassignment?</p>
@@ -3571,7 +3694,7 @@
         const newNotes = textarea.value;
         state.config.wikiNotes = newNotes;
         try {
-          await cloudPost('updateConfig', { config: buildPersistedConfig() });
+          await saveLocalState('updateConfig', { config: buildPersistedConfig() });
           render();
         } catch (err) {
           // handled globally
@@ -3587,6 +3710,16 @@
     ];
 
     function renderFormsTabImpl() {
+      if (PUBLIC_RELEASE) {
+        els.tabForms.innerHTML = `
+          <section class="surface-card p-6">
+            <p class="text-sm font-black uppercase tracking-[.14em] text-[#2774ae]">Printable references</p>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-[#102a43]">Lottery forms</h1>
+            <p class="mt-3 max-w-2xl text-sm leading-relaxed text-[#486581]">Printable forms are distributed separately by the Bruin Woods operations team and are not included in this public application.</p>
+          </section>`;
+        return;
+      }
+
       const selected = LOTTERY_FORMS[0];
       const formPath = form => `forms/${form.file}`;
       const cards = LOTTERY_FORMS.map((form, index) => `
@@ -3678,7 +3811,7 @@
           </section>
 
           <section class="surface-card p-5"><div class="flex flex-wrap items-center justify-between gap-4"><div><h2 class="text-lg font-black text-[#102a43]">Active lottery status</h2><p class="mt-1 text-sm text-[#627d98]">A quick readiness check before you continue.</p></div><div class="flex items-center gap-3"><span class="rounded-full px-3 py-1 text-xs font-black ${validation.ok ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}">${validation.ok ? "Ready to run" : `${validation.issues.length} item${validation.issues.length === 1 ? "" : "s"} to resolve`}</span><button id="homeReviewLotteryBtn" ${state.families.length ? "" : "disabled"} class="rounded-lg bg-[#003b5c] px-4 py-2 text-sm font-black text-[#ffd100] hover:bg-[#002d47] disabled:cursor-not-allowed disabled:opacity-50">Review &amp; run lottery →</button></div></div>
-            <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5"><div class="staff-stat"><span class="staff-stat-label">Families</span><span class="staff-stat-value">${state.families.length} <small class="text-sm font-semibold text-[#627d98]">/ ${state.config.expectedFamilies}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Forms entered</span><span class="staff-stat-value">${enteredForms} <small class="text-sm font-semibold text-[#627d98]">/ ${state.families.length}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Assignments</span><span class="staff-stat-value">${activeRows.length}</span></div><div class="staff-stat"><span class="staff-stat-label">Run status</span><span class="staff-stat-value text-base">${escapeHtml(runStatus)}</span></div><div class="staff-stat"><span class="staff-stat-label">Save status</span><span class="staff-stat-value text-base">${isOfflineMode ? "Local only" : "Saved locally"}</span></div></div>
+            <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5"><div class="staff-stat"><span class="staff-stat-label">Families</span><span class="staff-stat-value">${state.families.length} <small class="text-sm font-semibold text-[#627d98]">/ ${state.config.expectedFamilies}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Forms entered</span><span class="staff-stat-value">${enteredForms} <small class="text-sm font-semibold text-[#627d98]">/ ${state.families.length}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Assignments</span><span class="staff-stat-value">${activeRows.length}</span></div><div class="staff-stat"><span class="staff-stat-label">Run status</span><span class="staff-stat-value text-base">${escapeHtml(runStatus)}</span></div><div class="staff-stat"><span class="staff-stat-label">Save status</span><span class="staff-stat-value text-base">Saved locally</span></div></div>
           </section>
 
           <section class="flex items-center justify-between gap-4 rounded-2xl border border-dashed border-[#bcccdc] bg-white px-5 py-4"><div><p class="font-black text-[#102a43]">Need a clean working draft?</p><p class="mt-1 text-sm text-[#627d98]">Starting a new lottery keeps published records but clears only the active families and results.</p></div><button id="homeNewLotteryAction" class="shrink-0 rounded-lg border border-[#bcccdc] px-4 py-2 text-sm font-bold text-[#486581] hover:border-[#627d98] hover:bg-slate-50">Start new lottery</button></section>
@@ -3702,7 +3835,7 @@
         onConfirm: async () => {
           state.families = [];
           state.results = { rows: [], runAt: null };
-          try { await cloudPost("startNewLottery"); } catch (err) { /* local persistence fallback is already handled */ }
+          try { await saveLocalState("startNewLottery"); } catch (err) { /* local persistence fallback is already handled */ }
           render();
           setActiveTab("entry");
         }
@@ -4030,7 +4163,7 @@
           state.archives = (state.archives || []).filter(item => item.id !== archive.id);
           selectedArchiveId = state.archives[0]?.id || null;
           try {
-            await cloudPost("deleteLotteryArchive");
+            await saveLocalState("deleteLotteryArchive");
           } catch (err) {
             // Local persistence remains available if a future cloud adapter fails.
           }
@@ -4144,7 +4277,7 @@
       selectedArchiveId = archive.id;
       posterEmailPromptArchiveId = archive.id;
       try {
-        await cloudPost("publishLotteryArchive");
+        await saveLocalState("publishLotteryArchive");
       } catch (err) {
         // The local persistence path remains available if a future cloud adapter fails.
       }
@@ -4229,7 +4362,7 @@
           const resetDefaults = getStoredDefaultConfig();
           state = defaultState();
           assignConfigToState(resetDefaults, resetDefaults);
-          try { await cloudPost("resetAll", { config: buildPersistedConfig() }); render(); setActiveTab("home"); } catch (err) { /* handled globally */ }
+          try { await saveLocalState("resetAll", { config: buildPersistedConfig() }); render(); setActiveTab("home"); } catch (err) { /* handled globally */ }
         }
       });
     }
@@ -4254,73 +4387,19 @@
       els.backupFileInput.click();
     }
 
-    async function syncLocalChangesToCloud() {
-      if (!hasPendingLocalChanges) {
-        alert("There are no pending local-only changes to sync.");
-        return;
-      }
-
-      if (!confirm("Push this browser's local snapshot to the cloud and replace the current cloud copy?")) return;
-
-      const backup = buildBackupPayload();
-
-      try {
-        const response = await cloudPost("restoreBackup", { backup });
-        if (response.localOnly) {
-          render();
-          return;
-        }
-
-        isOfflineMode = false;
-        saveStateSnapshotLocally({ dirty: false, lastCloudSyncAt: response.serverTime || lastCloudSyncAt });
-        hideBanner();
-        render();
-        setSyncing(false);
-        alert("Local changes synced to cloud.");
-      } catch (err) {
-        showBanner(`Cloud sync failed: ${err.message}`);
-      }
-    }
-
-    async function discardLocalUnsyncedChanges() {
-      if (!hasPendingLocalChanges) {
-        alert("There are no pending local-only changes to discard.");
-        return;
-      }
-
-      if (!confirm("Discard this browser's unsynced local changes and reload from cloud?")) return;
-
-      saveStateSnapshotLocally({ dirty: false });
-      hideBanner();
-
-      try {
-        await syncFromCloud();
-        render();
-        alert("Local unsynced changes discarded. Reloaded latest cloud data.");
-      } catch (err) {
-        showBanner(`Unable to reload from cloud after discard: ${err.message}`);
-      }
-    }
-
     async function handleBackupFile(event) {
       const file = event.target.files?.[0];
       if (!file) return;
       try {
         const text = await file.text();
-        const backup = JSON.parse(text);
-        if (!Array.isArray(backup.families) || !backup.config || !Array.isArray(backup.results)) {
-          alert("Backup file is invalid.");
-          return;
-        }
+        const backup = normalizeRecoveryDocument(JSON.parse(text));
         requestConfirmation({
           title: "Replace data with this backup?",
           message: "The imported backup will replace the active workspace and published history currently stored in this browser.",
           confirmLabel: "Import and replace",
-          onConfirm: async () => {
+          onConfirm: () => {
             applyStateSnapshot(backup);
-            saveStateSnapshotLocally({ dirty: false });
-            const response = await cloudPost("restoreBackup", { backup });
-            if (!response.localOnly) saveStateSnapshotLocally({ dirty: false, lastCloudSyncAt: response.serverTime || lastCloudSyncAt });
+            saveStateSnapshotLocally();
             render();
             setActiveTab("home");
           }
@@ -4330,47 +4409,8 @@
       }
     }
 
-    async function syncFromCloud() {
-      const snapshot = loadLocalSnapshot();
-      if (snapshot) applyStateSnapshot(snapshot);
-    }
-
-    syncClient = createSyncClient({
-      githubOwner: GITHUB_OWNER,
-      githubRepo: GITHUB_REPO,
-      githubBranch: GITHUB_BRANCH,
-      githubDatabasePath: GITHUB_DATABASE_PATH,
-      githubTokenStorageKey: GITHUB_TOKEN_STORAGE_KEY,
-      githubShaStorageKey: GITHUB_SHA_STORAGE_KEY,
-      setSyncing,
-      hideBanner,
-      showBanner,
-      setSpreadsheetUrl,
-      getSpreadsheetUrl: () => spreadsheetUrl,
-      createCloudError,
-      getMisconfiguredEndpointMessage,
-      isRecoverableCloudError,
-      getFriendlyCloudErrorMessage,
-      saveStateSnapshotLocally,
-      getLastCloudSyncAt: () => lastCloudSyncAt,
-      setLastCloudSyncAt: (value) => { lastCloudSyncAt = value || null; },
-      setHasPendingLocalChanges: (value) => { hasPendingLocalChanges = Boolean(value); },
-      setIsOfflineMode: (value) => { isOfflineMode = Boolean(value); },
-      loadLocalSnapshot,
-      getSnapshotMeta,
-      applyStateSnapshot,
-      getDatabaseSnapshot: () => ({
-        families: state.families,
-        config: buildPersistedConfig(),
-          results: getCurrentResultRows(),
-          archives: state.archives || []
-      }),
-      render
-    });
-
     function render() {
       switchView();
-      updateSyncLocalButtonState();
       renderHomeTab();
       renderHistoryTab();
       renderConfigTab();
@@ -4392,19 +4432,11 @@
       closeEditFamilyModal,
       saveEditFamilyModal,
       loadDemoGuests,
-      getSpreadsheetUrl: () => spreadsheetUrl,
-      syncLocalChangesToCloud,
-      discardLocalUnsyncedChanges,
       resetApp,
       exportBackup,
       importBackupPrompt,
       handleBackupFile,
       updateSidebarLayout: () => {},  // sidebar layout managed internally
-      setSpreadsheetUrl,
-      DEFAULT_SPREADSHEET_URL,
-      syncFromCloud,
-      isOfflineMode: () => isOfflineMode,
-      hasPendingLocalChanges: () => hasPendingLocalChanges,
       hideBanner,
       render,
       loadSidebarPreference,

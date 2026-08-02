@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bruin Woods Lottery">
+  <rect width="512" height="512" rx="88" fill="#003b5c"/>
+  <path d="M0 365h512v147H0z" fill="#176b4d"/>
+  <path d="M0 391c92-50 167-50 256 0s164 50 256 0v121H0z" fill="#2774ae"/>
+  <circle cx="392" cy="112" r="52" fill="#ffd100"/>
+  <text x="256" y="310" fill="#fff" font-family="Arial, sans-serif" font-size="170" font-weight="700" text-anchor="middle">BW</text>
+</svg>
