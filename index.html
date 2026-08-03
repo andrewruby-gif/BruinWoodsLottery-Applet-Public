@@ -181,7 +181,7 @@
     .poster-sheet {
       width: 100%;
       min-width: 0;
-      min-height: 700px;
+      min-height: 820px;
       padding: 24px;
       color: #080808;
       background: #fff;
@@ -212,21 +212,55 @@
       font-weight: 800;
     }
     .poster-sheet-rules p { margin: 0; }
+    .poster-sheet-rail {
+      display: flex;
+      justify-content: space-between;
+      gap: .8rem;
+      margin-bottom: 2px;
+      font-size: 11px;
+      line-height: 1.1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .poster-sheet-rail span { flex: 1; }
+    .poster-sheet-rail span:last-child { text-align: right; }
+    .poster-sheet-highlight {
+      margin: 4px auto 6px;
+      max-width: 100%;
+      padding: 3px 8px;
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: #fff3a8;
+      border: 1px solid #f0d76c;
+    }
+    .poster-sheet-rules p.notice-strong { font-weight: 900; }
+    .poster-sheet-rules p.notice-alert { color: #d71938; font-weight: 900; }
+    .poster-sheet-rules p.notice-muted { font-weight: 700; color: #334e68; }
+    .poster-sheet-activity-notes {
+      margin-top: 10px;
+      display: grid;
+      gap: 4px;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 800;
+      text-align: center;
+    }
+    .poster-sheet-note-band {
+      padding: 4px 6px;
+      background: #ffd658;
+      border: 1px solid #f2bf2f;
+      text-transform: none;
+    }
     .poster-sheet-waterskiing .poster-sheet-rules {
       max-width: none;
       font-size: 9px;
       text-align: left;
     }
-    .poster-sheet-fishing .poster-sheet-rules p:first-child {
-      margin-bottom: 3px;
-      padding: 3px 6px;
-      background: #ffe100;
-    }
-    .poster-sheet-fishing .poster-sheet-rules p:not(:first-child) { font-weight: 900; }
-    .poster-sheet-pontoon-cruise .poster-sheet-rules p:nth-last-child(-n+2) {
-      padding: 2px 6px;
-      background: #d9effb;
-    }
+    .poster-sheet-fishing .poster-sheet-highlight { margin-top: 2px; margin-bottom: 4px; }
+    .poster-sheet-fishing .poster-sheet-rules p.notice-strong { font-size: 12px; }
+    .poster-sheet-pontoon-cruise .poster-sheet-rules p.notice-strong { font-size: 12px; }
     .poster-sheet-kayaking .poster-sheet-footer strong { color: #d71938; }
     .poster-day-grid {
       display: grid;
@@ -324,9 +358,10 @@
       text-transform: uppercase;
     }
     .poster-sheet-footer strong, .poster-sheet-footer span { display: block; }
+    .poster-sheet-footer .poster-footer-alert { color: #d71938; }
 
     @media print {
-      @page { size: letter landscape; margin: 0.35in; }
+      @page { size: tabloid landscape; margin: 0.3in; }
 
       /* Hide everything except the poster tab */
       .grain, #networkBanner, #syncingOverlay, .app-header, #sidePanel,
@@ -359,8 +394,8 @@
         box-sizing: border-box !important;
         width: 100% !important;
         min-width: 0 !important;
-        min-height: 7.75in !important;
-        max-height: 7.75in !important;
+        min-height: 10.35in !important;
+        max-height: 10.35in !important;
         padding: 0 !important;
         overflow: hidden !important;
         border: 0 !important;
@@ -375,19 +410,23 @@
         page-break-after: avoid !important;
       }
 
-      .poster-sheet-header h3 { font-size: 21px !important; }
-      .poster-sheet-rules { margin-bottom: 8px !important; font-size: 8px !important; }
-      .poster-sheet-waterskiing .poster-sheet-rules { font-size: 7px !important; }
-      .poster-day > h4 { font-size: 12px !important; }
-      .poster-column-labels { min-height: 19px !important; font-size: 7px !important; }
-      .poster-slot-time { min-height: 19px !important; padding-top: 4px !important; font-size: 9px !important; }
-      .poster-reservation-row { min-height: 20px !important; font-size: 8px !important; }
+      .poster-sheet { min-height: 0 !important; }
+      .poster-sheet-brand { font-size: 17px !important; }
+      .poster-sheet-header h3 { font-size: 28px !important; }
+      .poster-sheet-rail { font-size: 11px !important; }
+      .poster-sheet-highlight { font-size: 11px !important; margin-bottom: 6px !important; }
+      .poster-sheet-rules { margin-bottom: 10px !important; font-size: 11px !important; }
+      .poster-sheet-waterskiing .poster-sheet-rules { font-size: 9px !important; }
+      .poster-day > h4 { font-size: 16px !important; }
+      .poster-column-labels { min-height: 22px !important; font-size: 9px !important; }
+      .poster-slot-time { min-height: 22px !important; padding-top: 4px !important; font-size: 12px !important; }
+      .poster-reservation-row { min-height: 23px !important; font-size: 10px !important; }
       .poster-row-number, .poster-winner, .poster-room { padding-top: 4px !important; }
       .poster-type { padding-top: 4px !important; }
-      .poster-kayak-label { min-height: 15px !important; padding-top: 3px !important; font-size: 8px !important; }
-      .poster-sheet-waterskiing .poster-reservation-row { min-height: 16px !important; }
-      .poster-sheet-waterskiing .poster-slot-time { min-height: 16px !important; padding-top: 3px !important; }
-      .poster-sheet-footer { margin-top: 8px !important; font-size: 9px !important; }
+      .poster-kayak-label { min-height: 17px !important; padding-top: 3px !important; font-size: 9px !important; }
+      .poster-sheet-waterskiing .poster-reservation-row { min-height: 17px !important; font-size: 8px !important; }
+      .poster-sheet-waterskiing .poster-slot-time { min-height: 17px !important; font-size: 9px !important; }
+      .poster-sheet-footer { margin-top: 10px !important; font-size: 11px !important; }
     }
   </style>
 </head>
@@ -912,7 +951,7 @@
 
     const RECOVERY_FORMAT = "bruin-woods-lottery-recovery";
     const RECOVERY_SCHEMA_VERSION = 1;
-    const PUBLIC_RELEASE = true;
+    const PUBLIC_RELEASE = false;
     const STORAGE_KEY = "summer-camp-serpentine-v1";
     const SIDEBAR_PREF_KEY = `${STORAGE_KEY}-sidebar-collapsed`;
     const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -3132,51 +3171,95 @@
 
     const POSTER_SHEET_DETAILS = {
       waterskiing: {
+        brand: "UCLA Bruin Woods",
         title: "Waterskiing Lottery Winners",
         notices: [
-          "Water ski slots are filled by lottery. Two skiers go each trip and ski approximately 25 minutes each.",
-          "A lottery win permits you one skier (person) per reservation.",
-          "If you have never skied before, please go to MacKenzie's Ski School at the Village (909-337-3814) to have a professional ski lesson before skiing at BRUIN WOODS. Experience is required.",
-          "You must be a Polar or older with previous experience to waterski/wakeboard.",
-          "Reservations must be confirmed by noon the previous day.",
-          "Wakeboarding: W, Kneeboarding: K"
+          { text: "Water ski slots are filled by lottery. Two skiers go each trip and ski approximately 25 minutes each.", tone: "muted" },
+          { text: "A lottery win permits one reservation per family. Usually one skier rides plus observer(s) in the boat.", tone: "muted" },
+          { text: "Meet at the horseshoe pits. If you have never skied before, please go to MacKenzie's Ski School at the Village (909-337-3814) for a professional lesson before your reservation.", tone: "muted" },
+          { text: "You must have previous experience to waterski/wakeboard. Bruin or older can kneeboard.", tone: "alert" },
+          { text: "Confirm reservations by noon the previous day.", tone: "strong" },
+          { text: "Type codes: Single Ski/Double Ski = S, Wakeboarding = W, Kneeboarding = K.", tone: "strong" }
         ],
+        activityNotes: [{ text: "Teen Ski: 1:30-4:00", tone: "muted" }],
+        footer: {
+          primary: "Only Bruin Woods staff may enter or remove reservations",
+          primaryTone: "alert",
+          secondary: "Guests, please do not write on this form"
+        },
         columns: ["Name", "Type", "Rm. #"]
       },
       kayaking: {
+        brand: "",
         title: "Kayaking Lottery Winners",
         notices: [
-          "ALL guests must wear life vests when in the kayak.",
-          "This activity is available to ages 13 and up, but minors must be accompanied by an adult.",
-          "You must take an ALA Human Powered Vessel Test online before your kayak trip.",
-          "https://www.ala-ca.org/human_powered_vessels.php",
-          "Meet at the horseshoe pits at your scheduled time."
+          { text: "All guests must wear life vests when in the kayaks.", tone: "strong" },
+          { text: "This activity is available to ages 13 and up; minors must be accompanied by an adult.", tone: "strong" },
+          { text: "You must take an ALA Human Powered Vessel Test online before your trip:", tone: "strong" },
+          { text: "https://www.ala-ca.org/human_powered_vessels.php", tone: "strong" },
+          { text: "Meet at the horseshoe pits at your scheduled time.", tone: "strong" }
         ],
+        footer: {
+          primary: "Only Bruin Woods staff may enter or remove reservations",
+          primaryTone: "alert",
+          secondary: "Guests, please do not write on this form"
+        },
         columns: ["Family name / participants", "Room #"]
       },
       fishing: {
+        rail: {
+          left: "Guests, please do not write on this form",
+          right: "Front desk only may enter or remove reservations"
+        },
+        highlight: "Age Restriction: Must be a cub or older to go on the boat",
+        brand: "UCLA Bruin Woods",
         title: "Fishing Lottery Winners",
         notices: [
-          "Age Restriction: MUST BE A CUB OR UP TO GO ON THE BOAT",
-          "YOU MUST CONFIRM BY NOON ON THE DAY BEFORE THE TRIP TO BE GUARANTEED YOUR SPOT. EACH FAMILY RECEIVES 3 SPOTS.",
-          "A FISHING LICENSE IS REQUIRED AND MAY BE PURCHASED ONLINE ($21.09) - SEE FRONT DESK."
+          { text: "You must confirm by noon on the day before the trip to guarantee your spot.", tone: "strong" },
+          { text: "Each family receives 3 spots only.", tone: "alert" },
+          { text: "A fishing license is required and may be purchased online ($21.09). See front desk with any questions.", tone: "strong" }
         ],
+        footer: {
+          primary: "Front desk only may enter or remove reservations",
+          primaryTone: "alert",
+          secondary: "Guests, please do not write on this form"
+        },
         columns: ["Family name / participants", "Room #"]
       },
       "pontoon-cruise": {
-        title: "Pontoon Boat Cruise Lottery Winners",
+        brand: "UCLA Bruin Woods",
+        title: "Pontoon Boat Cruises",
         notices: [
-          "LIFEJACKETS REQUIRED FOR THOSE 12 YEARS AND UNDER.",
-          "MEET AT THE HORSESHOE PITS, AND ARRIVE 10 MINUTES PRIOR TO YOUR DEPARTURE TIME TO ENSURE WE MEET OUR COMPLEX SCHEDULE.",
-          "BE SURE TO CANCEL IF YOU CHANGE YOUR MIND. YOU MUST CONFIRM BY NOON ON THE DAY BEFORE THE TRIP.",
-          "A LOTTERY WIN ENTITLES A FAMILY 6 SEATS ON THE BOAT; ONE FAMILY NAME PER NUMBERED LINE.",
-          "SOME TIME SLOTS ACCOMMODATE UP TO 4 FAMILIES, OTHERS 2."
+          { text: "Lifejackets required for those 12 years and under.", tone: "strong" },
+          { text: "Meet at the horseshoe pits and arrive 10 minutes before your scheduled departure so we can keep the route on time.", tone: "strong" },
+          { text: "Cancel if your plans change. Confirm by noon on the day before your trip.", tone: "strong" },
+          { text: "A lottery win entitles a family to 6 seats on the boat. One family name per numbered line.", tone: "strong" },
+          { text: "Some time slots accommodate up to 4 families, others only 2.", tone: "strong" }
         ],
+        activityNotes: [
+          { text: "*12:00 PM cruises: Head to lunch buffet after cruise ends at 1:00 PM. Buffet line closes at 1:30 PM.", tone: "band" },
+          { text: "**6:00 PM cruise: Plan dinner around your late evening cruise. Dinner buffet line closes at 7:30 PM.", tone: "band" }
+        ],
+        footer: {
+          primary: "Only Bruin Woods staff may enter or remove reservations",
+          secondary: "Guests, please do not write on this form"
+        },
         columns: ["Family name / participants", "Room #"]
       }
     };
 
     const POSTER_DAY_NAMES = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday" };
+
+    function normalizePosterDayToken(dayValue) {
+      const raw = String(dayValue || "").trim().toLowerCase();
+      if (!raw) return "";
+      if (raw.startsWith("mon")) return "Mon";
+      if (raw.startsWith("tue")) return "Tue";
+      if (raw.startsWith("wed")) return "Wed";
+      if (raw.startsWith("thu")) return "Thu";
+      if (raw.startsWith("fri")) return "Fri";
+      return "";
+    }
 
     function formatPosterSlotTime(activityId, slot) {
       const knownRanges = {
@@ -3215,6 +3298,20 @@
       return [...new Set(codes)].join("/");
     }
 
+    function renderPosterNotice(notice) {
+      if (notice && typeof notice === "object") {
+        const tone = notice.tone === "alert"
+          ? "notice-alert"
+          : notice.tone === "strong"
+            ? "notice-strong"
+            : notice.tone === "muted"
+              ? "notice-muted"
+              : "";
+        return `<p class="${tone}">${escapeHtml(notice.text || "")}</p>`;
+      }
+      return `<p>${escapeHtml(String(notice || ""))}</p>`;
+    }
+
     function buildPosterReservationRows(activity, slot, assignedRows) {
       if (activity.id === "kayaking") {
         const kayakCount = Math.max(Number(slot.capacity) || 0, assignedRows.length, 1);
@@ -3244,12 +3341,20 @@
 
       return getActivities().slice().sort((a, b) => posterActivityRank(a.name) - posterActivityRank(b.name) || a.name.localeCompare(b.name)).map(activity => {
         const details = POSTER_SHEET_DETAILS[activity.id] || {
+          brand: "UCLA Bruin Woods",
           title: `${activity.name} Lottery Winners`,
-          notices: ["Only Bruin Woods staff may enter or remove reservations."],
+          notices: [{ text: "Only Bruin Woods staff may enter or remove reservations.", tone: "strong" }],
+          footer: {
+            primary: "Only Bruin Woods staff may enter or remove reservations",
+            secondary: "Guests, please do not write on this form"
+          },
           columns: ["Family name", "Room #"]
         };
         const dayColumns = dayOrder.map(day => {
-          const slots = activity.slots.filter(slot => slot.day === day).slice().sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+          const slots = activity.slots
+            .filter(slot => normalizePosterDayToken(slot.day) === day)
+            .slice()
+            .sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
           const slotsMarkup = slots.length ? slots.map(slot => {
             const assigned = assignmentsBySlot.get(slot.id) || [];
             return `<section class="poster-slot"><div class="poster-slot-time">${escapeHtml(formatPosterSlotTime(activity.id, slot))}</div>${buildPosterReservationRows(activity, slot, assigned)}</section>`;
@@ -3257,12 +3362,32 @@
           const columnLabels = details.columns.map(column => `<span>${escapeHtml(column)}</span>`).join("");
           return `<div class="poster-day"><h4>${escapeHtml(POSTER_DAY_NAMES[day] || day)}</h4><div class="poster-column-labels poster-column-labels-${activity.id}">${columnLabels}</div>${slotsMarkup}</div>`;
         }).join("");
-        const noticesMarkup = details.notices.map(notice => `<p>${escapeHtml(notice)}</p>`).join("");
+        const railMarkup = details.rail
+          ? `<div class="poster-sheet-rail"><span>${escapeHtml(details.rail.left || "")}</span><span>${escapeHtml(details.rail.right || "")}</span></div>`
+          : "";
+        const highlightMarkup = details.highlight
+          ? `<div class="poster-sheet-highlight">${escapeHtml(details.highlight)}</div>`
+          : "";
+        const brandMarkup = details.brand
+          ? `<div class="poster-sheet-brand">${escapeHtml(details.brand)}</div>`
+          : "";
+        const noticesMarkup = (details.notices || []).map(renderPosterNotice).join("");
+        const notesMarkup = Array.isArray(details.activityNotes) && details.activityNotes.length
+          ? `<div class="poster-sheet-activity-notes">${details.activityNotes.map(note => {
+              const text = typeof note === "string" ? note : note?.text || "";
+              const cls = note && typeof note === "object" && note.tone === "band" ? "poster-sheet-note-band" : "";
+              return `<p class="${cls}">${escapeHtml(text)}</p>`;
+            }).join("")}</div>`
+          : "";
+        const footerPrimary = details.footer?.primary || "Only Bruin Woods staff may enter or remove reservations";
+        const footerSecondary = details.footer?.secondary || "Guests, please do not write on this form";
+        const footerPrimaryClass = details.footer?.primaryTone === "alert" ? "poster-footer-alert" : "";
         return `
           <article class="activity-page poster-sheet poster-sheet-${activity.id}">
-            <header class="poster-sheet-header"><div class="poster-sheet-brand">UCLA Bruin Woods</div><h3>${escapeHtml(details.title)}</h3><div class="poster-sheet-rules">${noticesMarkup}</div></header>
+            <header class="poster-sheet-header">${railMarkup}${highlightMarkup}${brandMarkup}<h3>${escapeHtml(details.title)}</h3><div class="poster-sheet-rules">${noticesMarkup}</div></header>
             <div class="poster-day-grid">${dayColumns}</div>
-            <footer class="poster-sheet-footer"><strong>ONLY BRUIN WOODS STAFF MAY ENTER OR REMOVE RESERVATIONS.</strong><span>GUESTS, PLEASE DO NOT WRITE ON THIS FORM.</span></footer>
+            ${notesMarkup}
+            <footer class="poster-sheet-footer"><strong class="${footerPrimaryClass}">${escapeHtml(footerPrimary)}</strong><span>${escapeHtml(footerSecondary)}</span></footer>
           </article>`;
       }).join("");
     }
@@ -3814,6 +3939,19 @@
             <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5"><div class="staff-stat"><span class="staff-stat-label">Families</span><span class="staff-stat-value">${state.families.length} <small class="text-sm font-semibold text-[#627d98]">/ ${state.config.expectedFamilies}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Forms entered</span><span class="staff-stat-value">${enteredForms} <small class="text-sm font-semibold text-[#627d98]">/ ${state.families.length}</small></span></div><div class="staff-stat"><span class="staff-stat-label">Assignments</span><span class="staff-stat-value">${activeRows.length}</span></div><div class="staff-stat"><span class="staff-stat-label">Run status</span><span class="staff-stat-value text-base">${escapeHtml(runStatus)}</span></div><div class="staff-stat"><span class="staff-stat-label">Save status</span><span class="staff-stat-value text-base">Saved locally</span></div></div>
           </section>
 
+          <section class="rounded-2xl border border-[#d9e2ec] bg-white p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-black text-[#102a43]">Transfer progress between computers</h2>
+                <p class="mt-1 text-sm text-[#627d98]">Export a backup from the other device, then import it here to continue from the same family check-in and lottery state.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button id="homeExportBackupBtn" class="rounded-lg border border-[#bcccdc] px-4 py-2 text-sm font-bold text-[#486581] hover:border-[#627d98] hover:bg-slate-50" type="button">Export backup</button>
+                <button id="homeImportBackupBtn" class="rounded-lg bg-[#003b5c] px-4 py-2 text-sm font-black text-[#ffd100] hover:bg-[#002d47]" type="button">Import backup</button>
+              </div>
+            </div>
+          </section>
+
           <section class="flex items-center justify-between gap-4 rounded-2xl border border-dashed border-[#bcccdc] bg-white px-5 py-4"><div><p class="font-black text-[#102a43]">Need a clean working draft?</p><p class="mt-1 text-sm text-[#627d98]">Starting a new lottery keeps published records but clears only the active families and results.</p></div><button id="homeNewLotteryAction" class="shrink-0 rounded-lg border border-[#bcccdc] px-4 py-2 text-sm font-bold text-[#486581] hover:border-[#627d98] hover:bg-slate-50">Start new lottery</button></section>
         </div>`;
 
@@ -3821,6 +3959,8 @@
       document.getElementById("homeHistoryAction").addEventListener("click", () => setActiveTab("history"));
       document.getElementById("homeWikiAction").addEventListener("click", () => setActiveTab("wiki"));
       document.getElementById("homeSettingsAction").addEventListener("click", () => setActiveTab("config"));
+      document.getElementById("homeExportBackupBtn").addEventListener("click", exportBackup);
+      document.getElementById("homeImportBackupBtn").addEventListener("click", importBackupPrompt);
       document.getElementById("homeNewLotteryAction").addEventListener("click", startNewLottery);
       document.getElementById("homeReviewLotteryBtn").addEventListener("click", () => setActiveTab("results"));
     }
@@ -4392,7 +4532,16 @@
       if (!file) return;
       try {
         const text = await file.text();
-        const backup = normalizeRecoveryDocument(JSON.parse(text));
+        const parsed = JSON.parse(text);
+        const isDiagnosticsExport = parsed && typeof parsed === "object" && !Array.isArray(parsed)
+          && (Object.prototype.hasOwnProperty.call(parsed, "diagnostics") || Object.prototype.hasOwnProperty.call(parsed, "rowCount") || Object.prototype.hasOwnProperty.call(parsed, "exportedAt"));
+
+        if (isDiagnosticsExport) {
+          showBanner("Import failed: this file is a diagnostics export, not a lottery backup. Use the Export backup action to create a file that can be imported.");
+          return;
+        }
+
+        const backup = normalizeRecoveryDocument(parsed);
         requestConfirmation({
           title: "Replace data with this backup?",
           message: "The imported backup will replace the active workspace and published history currently stored in this browser.",
